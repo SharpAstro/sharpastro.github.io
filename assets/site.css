@@ -1,0 +1,549 @@
+/* SharpAstro org site.
+
+   Two themes, both drawn from the subject rather than from a mood board:
+   - dark  = the sky at astronomical twilight. Not pure black; a real dark sky is blue-black,
+             and every neutral here is biased the same way so the greys read as chosen.
+   - light = a photographic survey plate. Plates are negatives, so the light theme is ink on a
+             cool near-white, NOT cream -- the warm-paper-and-serif look is somebody else's site.
+
+   The teal accent is not invented: #66ddcc is the pinned-target colour the TianWen GUI draws
+   with, and the same value the in-browser app already uses for its chrome. Site and product
+   are one system. Amber is a K-class star's colour and is spent in exactly one place, the
+   live-demo call to action.
+
+   Everything is styled through the tokens; the media query and the [data-theme] overrides
+   redefine ONLY the tokens, so the OS preference and the explicit toggle can never disagree
+   about a component. */
+
+:root {
+    color-scheme: dark light;
+
+    --void: #070a12;
+    --panel: #0d1220;
+    --panel-2: #111829;
+    --line: #1b2334;
+    --line-strong: #2b3550;
+    --text: #dbe2ee;
+    --dim: #8895ac;
+    --teal: #66ddcc;
+    --teal-ink: #041a17;
+    --amber: #ffb35c;
+    --amber-ink: #21140a;
+    --scrim-top: rgba(7, 10, 18, 0.35);
+    --scrim-bottom: rgba(7, 10, 18, 0.97);
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 44px rgba(0, 0, 0, 0.5);
+
+    /* One scale, used everywhere. */
+    --t--1: 0.8125rem;
+    --t-0: 0.9375rem;
+    --t-1: 1.0625rem;
+    --t-2: 1.375rem;
+    --t-3: 2rem;
+    --t-4: 3.25rem;
+
+    --measure: 62ch;
+    --gutter: clamp(1.25rem, 4vw, 3rem);
+    --max: 1180px;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --void: #f5f6f8;
+        --panel: #ffffff;
+        --panel-2: #eef1f5;
+        --line: #dde2ea;
+        --line-strong: #c3ccd9;
+        --text: #0f141c;
+        --dim: #59647a;
+        --teal: #0b7d6d;
+        --teal-ink: #ffffff;
+        --amber: #8f5300;
+        --amber-ink: #ffffff;
+        --scrim-top: rgba(245, 246, 248, 0.10);
+        --scrim-bottom: rgba(245, 246, 248, 0.97);
+        --shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 34px rgba(15, 20, 28, 0.14);
+    }
+}
+
+/* The toggle wins over the OS in BOTH directions, so it needs its own full redefinition
+   rather than only overriding the media query's half. */
+:root[data-theme="light"] {
+    color-scheme: light;
+    --void: #f5f6f8;
+    --panel: #ffffff;
+    --panel-2: #eef1f5;
+    --line: #dde2ea;
+    --line-strong: #c3ccd9;
+    --text: #0f141c;
+    --dim: #59647a;
+    --teal: #0b7d6d;
+    --teal-ink: #ffffff;
+    --amber: #8f5300;
+    --amber-ink: #ffffff;
+    --scrim-top: rgba(245, 246, 248, 0.10);
+    --scrim-bottom: rgba(245, 246, 248, 0.97);
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 34px rgba(15, 20, 28, 0.14);
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --void: #070a12;
+    --panel: #0d1220;
+    --panel-2: #111829;
+    --line: #1b2334;
+    --line-strong: #2b3550;
+    --text: #dbe2ee;
+    --dim: #8895ac;
+    --teal: #66ddcc;
+    --teal-ink: #041a17;
+    --amber: #ffb35c;
+    --amber-ink: #21140a;
+    --scrim-top: rgba(7, 10, 18, 0.35);
+    --scrim-bottom: rgba(7, 10, 18, 0.97);
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 44px rgba(0, 0, 0, 0.5);
+}
+
+/* Self-hosted so the published site has no third-party font request. */
+@font-face {
+    font-family: "Plex Sans";
+    src: url("fonts/plex-sans-400.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Plex Sans";
+    src: url("fonts/plex-sans-600.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Plex Serif";
+    src: url("fonts/plex-serif-600.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Plex Mono";
+    src: url("fonts/plex-mono-400.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Plex Mono";
+    src: url("fonts/plex-mono-500.woff2") format("woff2");
+    font-weight: 500;
+    font-display: swap;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    background: var(--void);
+    color: var(--text);
+    font-family: "Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: var(--t-0);
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+    font-family: "Plex Serif", Georgia, serif;
+    font-weight: 600;
+    line-height: 1.15;
+    text-wrap: balance;
+    margin: 0;
+}
+
+p { margin: 0; }
+
+a { color: inherit; }
+
+img { display: block; max-width: 100%; height: auto; }
+
+code, .mono { font-family: "Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+:where(a, button, summary):focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+.wrap {
+    width: 100%;
+    max-width: var(--max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+
+/* An uppercase micro-label. Used for section eyebrows and catalogue group headers -- the
+   small-caps register astronomical catalogues use for their own section heads. */
+.eyebrow {
+    font-family: "Plex Mono", monospace;
+    font-size: var(--t--1);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+}
+
+/* ---------- top bar ---------- */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem var(--gutter);
+    background: color-mix(in srgb, var(--void) 82%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+}
+
+.topbar .brand {
+    font-family: "Plex Serif", Georgia, serif;
+    font-weight: 600;
+    font-size: var(--t-1);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+}
+
+.topbar .brand .sharp { color: var(--teal); }
+
+.topbar nav {
+    margin-inline-start: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.topbar nav a,
+.theme-toggle {
+    font-size: var(--t--1);
+    color: var(--dim);
+    text-decoration: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    background: none;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.topbar nav a:hover,
+.theme-toggle:hover { color: var(--text); background: var(--panel-2); }
+
+@media (max-width: 640px) {
+    .topbar nav a[data-optional] { display: none; }
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    padding-block: clamp(4rem, 13vh, 8rem) clamp(3.5rem, 10vh, 6rem);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+}
+
+/* The atlas screenshot IS the hero image -- the most characteristic thing the project draws.
+   It sits behind a vertical scrim so the type stays legible without a flat overlay killing it. */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image: url("img/sky-atlas.webp");
+    background-size: cover;
+    background-position: 50% 42%;
+    opacity: 0.55;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, var(--scrim-top) 0%, var(--scrim-bottom) 78%);
+}
+
+/* The photo backdrop is a DARK-THEME device and does not survive inversion: a night sky laid
+   over pale paper at any opacity is just grey, whatever the value. So the light theme drops it
+   entirely and the hero becomes typographic on the plate ground, with a faint accent wash --
+   which is what a printed atlas plate actually looks like, rather than a dimmed photograph. */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .hero::before { display: none; }
+    :root:not([data-theme="dark"]) .hero::after {
+        background:
+            radial-gradient(70% 100% at 15% 0%, color-mix(in srgb, var(--teal) 9%, transparent), transparent 60%),
+            linear-gradient(180deg, transparent 60%, var(--void) 100%);
+    }
+}
+:root[data-theme="light"] .hero::before { display: none; }
+:root[data-theme="light"] .hero::after {
+    background:
+        radial-gradient(70% 100% at 15% 0%, color-mix(in srgb, var(--teal) 9%, transparent), transparent 60%),
+        linear-gradient(180deg, transparent 60%, var(--void) 100%);
+}
+:root[data-theme="dark"] .hero::before { display: block; opacity: 0.55; }
+
+.hero h1 {
+    font-size: var(--t-4);
+    letter-spacing: -0.02em;
+    margin-block: 0.9rem 1.1rem;
+    max-width: 18ch;
+}
+
+.hero .lede {
+    font-size: var(--t-1);
+    color: var(--dim);
+    max-width: var(--measure);
+}
+
+.hero .lede strong { color: var(--text); font-weight: 600; }
+
+.cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-block-start: 2rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.15rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: var(--t-0);
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+/* The single loudest element on the page, and the only amber. */
+.btn-primary { background: var(--amber); color: var(--amber-ink); }
+.btn-primary:hover { background: color-mix(in srgb, var(--amber) 88%, white); }
+
+.btn-ghost { border-color: var(--line-strong); color: var(--text); }
+.btn-ghost:hover { background: var(--panel-2); border-color: var(--teal); }
+
+.hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+    margin-block-start: 2.25rem;
+    font-family: "Plex Mono", monospace;
+    font-size: var(--t--1);
+    color: var(--dim);
+}
+
+.hero-meta span::before {
+    content: "·";
+    margin-inline-end: 0.55rem;
+    color: var(--line-strong);
+}
+.hero-meta span:first-child::before { content: none; }
+
+/* ---------- sections ---------- */
+
+section { padding-block: clamp(3.5rem, 9vh, 6rem); }
+
+.section-head { max-width: var(--measure); margin-block-end: 2.5rem; }
+.section-head h2 { font-size: var(--t-3); letter-spacing: -0.015em; margin-block: 0.6rem 0.75rem; }
+.section-head p { color: var(--dim); }
+
+/* Use cases: prose in a readable column, then the screenshot at FULL container width.
+   Not an icon grid -- each one is a concrete thing you do on a given night, so it gets a real
+   screenshot and real sentences.
+
+   Deliberately NOT the alternating side-by-side arrangement this started as. These are dense
+   application screenshots at ~2900px; beside a text column each one arrives about 370px wide,
+   which is illegible mush -- and the screenshots are the entire reason the section exists.
+   Prettier layout, useless images, is the wrong trade. */
+.usecases { display: flex; flex-direction: column; gap: clamp(3.5rem, 8vh, 5.5rem); }
+
+.usecase-body { max-width: var(--measure); margin-block-end: 1.5rem; }
+
+.usecase-body h3 { font-size: var(--t-2); margin-block: 0.55rem 0.7rem; }
+.usecase-body p { color: var(--dim); }
+.usecase-body p + p { margin-block-start: 0.8rem; }
+
+.usecase-body .detail {
+    margin-block-start: 1rem;
+    padding-inline-start: 0.9rem;
+    border-inline-start: 2px solid var(--line-strong);
+    font-size: var(--t--1);
+    color: var(--dim);
+}
+
+.usecase-body .detail code { color: var(--text); font-size: 0.95em; }
+
+figure { margin: 0; }
+
+/* For crops rather than full windows -- e.g. the equipment panel. Blown to the full container
+   they would just be upscaled. */
+.figure-narrow { max-width: 720px; }
+
+/* A real terminal exchange, for the one capability whose whole point is that there is no GUI
+   to screenshot. Scrolls rather than wrapping: a wrapped shell line stops looking like one. */
+.term {
+    margin: 0;
+    padding: 1.15rem 1.35rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+    font-family: "Plex Mono", ui-monospace, monospace;
+    font-size: var(--t--1);
+    line-height: 1.75;
+    color: var(--text);
+    tab-size: 4;
+}
+
+/* Amber is reserved for the single live-demo call to action, so it does NOT appear here.
+   The prompt carries the only accent; output is plain body colour. */
+.term code { font: inherit; color: inherit; }
+.term .c { color: var(--dim); }
+.term .p { color: var(--teal); user-select: none; }
+.term .o { color: var(--text); }
+
+.shot {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--panel);
+    box-shadow: var(--shadow);
+}
+
+figcaption {
+    margin-block-start: 0.6rem;
+    font-size: var(--t--1);
+    color: var(--dim);
+    max-width: var(--measure);
+}
+
+/* ---------- live demo band ---------- */
+
+.demo {
+    border-block: 1px solid var(--line);
+    background:
+        radial-gradient(80% 130% at 50% 0%, color-mix(in srgb, var(--teal) 8%, transparent), transparent 62%),
+        var(--panel);
+}
+
+.demo-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(1.75rem, 5vw, 3.5rem);
+    align-items: center;
+}
+
+.demo h2 { font-size: var(--t-3); letter-spacing: -0.015em; margin-block: 0.6rem 0.85rem; }
+.demo p { color: var(--dim); max-width: 46ch; }
+.demo p + p { margin-block-start: 0.85rem; }
+
+@media (max-width: 860px) {
+    .demo-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- the catalogue ---------- */
+
+/* The repos ARE a catalogue, so they are set like one: monospaced designations in a fixed
+   left column, group heads in the small-caps register, hairline rules between entries. */
+.catalogue { display: flex; flex-direction: column; gap: 2.75rem; }
+
+.cat-group > .eyebrow {
+    display: block;
+    padding-block-end: 0.6rem;
+    border-block-end: 1px solid var(--line-strong);
+}
+
+.cat-group > p.group-note {
+    color: var(--dim);
+    font-size: var(--t--1);
+    margin-block-start: 0.75rem;
+    max-width: var(--measure);
+}
+
+.cat-list { list-style: none; margin: 0; padding: 0; }
+
+.cat-list li { border-block-end: 1px solid var(--line); }
+
+.cat-list a {
+    display: grid;
+    grid-template-columns: minmax(11.5rem, 15rem) minmax(0, 1fr);
+    gap: 0.35rem 1.5rem;
+    align-items: baseline;
+    padding-block: 0.9rem;
+    text-decoration: none;
+    transition: background-color 120ms ease;
+}
+
+.cat-list a:hover { background: var(--panel-2); }
+
+.cat-name {
+    font-family: "Plex Mono", monospace;
+    font-weight: 500;
+    font-size: var(--t-0);
+    color: var(--teal);
+}
+
+.cat-list a:hover .cat-name { text-decoration: underline; text-underline-offset: 3px; }
+
+.cat-desc { color: var(--dim); font-size: var(--t--1); }
+.cat-desc code { color: var(--text); font-size: 0.95em; }
+
+.cat-flag {
+    display: inline-block;
+    margin-inline-start: 0.5rem;
+    padding: 0.05rem 0.4rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    font-family: "Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--dim);
+    vertical-align: 0.1em;
+}
+
+@media (max-width: 620px) {
+    .cat-list a { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- footer ---------- */
+
+footer {
+    border-block-start: 1px solid var(--line);
+    padding-block: 2.5rem 3.5rem;
+    color: var(--dim);
+    font-size: var(--t--1);
+}
+
+.footer-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+footer a { color: var(--dim); text-decoration-color: var(--line-strong); }
+footer a:hover { color: var(--text); }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+    .btn:hover { transform: none; }
+}
