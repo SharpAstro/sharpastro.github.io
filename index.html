@@ -46,7 +46,6 @@
         <nav>
             <a href="#use-cases" data-optional>Use&nbsp;cases</a>
             <a href="#demo" data-optional>Live&nbsp;demo</a>
-            <a href="#viewer" data-optional>Download</a>
             <a href="#ecosystem">Ecosystem</a>
             <a href="https://github.com/SharpAstro">GitHub</a>
             <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Switch between the dark and light theme">
@@ -69,7 +68,7 @@
 
                 <div class="cta-row">
                     <a class="btn btn-primary" href="/tianwen/">Try the sky atlas in your browser &rarr;</a>
-                    <a class="btn btn-ghost" href="#ecosystem">Browse the ecosystem</a>
+                    <a class="btn btn-ghost" href="#viewer">Get the image viewer</a>
                 </div>
 
                 <p class="hero-meta">
@@ -87,8 +86,9 @@
                     <p class="eyebrow">What it does</p>
                     <h2>A night, end to end</h2>
                     <p>
-                        Every screenshot below is the real application, driven against simulated hardware so the
-                        whole run is reproducible.
+                        Every screenshot below is the real application: the session tabs driven against
+                        simulated hardware, so the whole run is reproducible, and the viewer on a real
+                        stack.
                     </p>
                 </div>
 
@@ -227,6 +227,42 @@
                         </figure>
                     </article>
 
+                    <article class="usecase" id="viewer">
+                        <div class="usecase-body">
+                            <p class="eyebrow">Inspecting</p>
+                            <h3>Look at what came back</h3>
+                            <p>
+                                <strong>Astro Photo Viewer</strong> is a second application, shipped on its
+                                own through the Microsoft Store: the suite's viewer, without the suite. It
+                                opens FITS, SER planetary video, TIFF and Canon CR2/CR3, stretches and
+                                demosaics on the GPU, measures every star it finds, and draws a WCS grid with
+                                catalogue annotations over a plate-solved frame.
+                            </p>
+                            <p>
+                                A SER switches to frame playback, and a RAW/STACK toggle runs a rolling
+                                lucky-imaging stack that follows the playhead, with six wavelet-sharpen
+                                sliders over it. All of it off the render thread, so the sliders stay instant
+                                however long a stack takes.
+                            </p>
+                            <div class="cta-row">
+                                <a class="btn btn-ghost" href="https://apps.microsoft.com/detail/9pmdzp16tgbg">Get it from the Microsoft Store &rarr;</a>
+                            </div>
+                            <p class="detail">
+                                Windows&nbsp;10 version&nbsp;2004 or newer, x64 and ARM64, updating itself
+                                from the Store. Double-clicking a <code>.fits</code>, <code>.fit</code>,
+                                <code>.fts</code>, <code>.fz</code> or <code>.ser</code> opens that file in
+                                the window already showing its folder rather than starting another copy.
+                                Linux and macOS run the same viewer from a self-contained native AOT archive
+                                on <a href="https://github.com/SharpAstro/tianwen/releases">GitHub
+                                Releases</a>.
+                            </p>
+                        </div>
+                        <figure>
+                            <div class="shot"><img src="assets/img/viewer.webp" width="1800" height="1155" alt="Astro Photo Viewer showing a colour FITS of the Lagoon and Trifid nebulae: the file list at left, an A/B split down the middle between a pinned stretch and the live one, and metadata, per-channel statistics, white-balance sliders and a cursor read-out at right." loading="lazy" /></div>
+                            <figcaption>Astro Photo Viewer &mdash; the same screenshot the Store listing carries. An OIII/HOO stack of the Sagittarius triplet, plate-solved at 5.98&Prime;/px with 11,628 stars measured, the A/B split holding a pinned processing state against the live one.</figcaption>
+                        </figure>
+                    </article>
+
                 </div>
             </div>
         </section>
@@ -255,46 +291,6 @@
                     <div class="shot"><img src="assets/img/web-app.webp" width="1440" height="900" alt="The in-browser sky atlas rendering stars, constellation figures and the horizon through WebGL." loading="lazy" /></div>
                     <figcaption>The same atlas, drawn through WebGL instead of Vulkan.</figcaption>
                 </figure>
-            </div>
-        </section>
-
-        <section id="viewer">
-            <div class="wrap">
-                <div class="section-head">
-                    <p class="eyebrow">Install</p>
-                    <h2>The image viewer is in the Microsoft Store</h2>
-                    <p>
-                        <strong>Astro Photo Viewer</strong> is the suite's viewer shipped on its own: FITS,
-                        SER planetary video, TIFF and Canon CR2/CR3, with stretch and Bayer demosaic done on
-                        the GPU, star detection with HFD-sized circles, a WCS grid and catalogue annotations
-                        over a plate-solved frame, and a live lucky-imaging stack with wavelet sharpening for
-                        planetary video.
-                    </p>
-                    <p>
-                        Microsoft re-signs the package during certification, so it installs with no
-                        SmartScreen warning at all and updates itself. Windows&nbsp;10 version&nbsp;2004 or
-                        newer, x64 and ARM64. Double-clicking a <code>.fits</code>, <code>.fit</code>,
-                        <code>.fts</code>, <code>.fz</code> or <code>.ser</code> opens it in the window
-                        already showing that folder.
-                    </p>
-                </div>
-
-                <!-- Deliberately our own button rather than Microsoft's <ms-store-badge> component.
-                     The badge would pull a module, an SVG and a hidden iframe from get.microsoft.com,
-                     which is the one thing this page does not do anywhere else -- the fonts are
-                     self-hosted for exactly that reason -- and it renders nothing at all when that
-                     module is blocked. A plain link cannot fail that way. -->
-                <div class="cta-row">
-                    <a class="btn btn-ghost" href="https://apps.microsoft.com/detail/9pmdzp16tgbg">
-                        Get it from the Microsoft Store &rarr;
-                    </a>
-                </div>
-
-                <p class="store-note">
-                    Linux and macOS run the same viewer from a self-contained native AOT archive on
-                    <a href="https://github.com/SharpAstro/tianwen/releases">GitHub Releases</a>, which also
-                    carries the Windows archives for anyone who would rather not install from the Store.
-                </p>
             </div>
         </section>
 

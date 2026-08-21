@@ -28,9 +28,16 @@ top of that.
 
 ## The Microsoft Store link
 
-The `#viewer` section links to **Astro Photo Viewer** (store id `9PMDZP16TGBG`), which is
-`tianwen-fits` packaged as MSIX -- see `packaging/windows/msix/README.md` in `SharpAstro/tianwen` for
-how that package is built and why it ships through the Store at all.
+**Astro Photo Viewer** (store id `9PMDZP16TGBG`) is `tianwen-fits` packaged as MSIX -- see
+`packaging/windows/msix/README.md` in `SharpAstro/tianwen` for how that package is built and why it
+ships through the Store at all.
+
+It is deliberately **not** a section of its own. A standalone "Install" band read as a page about one
+product suddenly talking about a different one, with the suite's capabilities resuming underneath it.
+So the viewer is the seventh use case (`#viewer`, "Look at what came back") -- last, because looking
+at the frames is what happens after the night -- and the hero names it beside the browser demo, so
+both applications are visible before any scrolling. Nothing about it needs styles of its own: it uses
+`.usecase`, `.cta-row` and `.detail` like every neighbour.
 
 It is a plain `<a>` in a `.cta-row`, **not** Microsoft's `<ms-store-badge>` web component, which was
 tried and removed. The component pulls a module, a badge SVG and a hidden iframe from
@@ -46,7 +53,7 @@ feature. Two of its own quirks are worth recording in case it ever comes back:
   never removes the previous one, so the hover transform survives being switched off. Honouring
   `prefers-reduced-motion` means setting the attribute before its module runs.
 
-The link deliberately carries no `hl`/`gl` query, so the Store localises for whoever opens it, and no
+The Store link deliberately carries no `hl`/`gl` query, so the Store localises for whoever opens it, and no
 version number, which would go stale on every submission.
 
 ## Screenshots
@@ -54,6 +61,11 @@ version number, which would go stale on every submission.
 Captured from a DEBUG build of `tianwen-gui` driven against its simulated devices, so the whole run
 is reproducible and no real hardware or personal data appears. Stored as WebP (the same set as PNG
 was 3.9 MB against 0.68 MB).
+
+`assets/img/viewer.webp` is the one exception to all of that: it is `tianwen-fits` on a real OIII/HOO
+stack of the Sagittarius triplet, and it is **the same screenshot the Store listing carries**, so the
+two shopfronts show the same thing. Downscaled from the 2880x1848 capture to 1800px wide at quality
+86, which is the width every other application shot here uses.
 
 `assets/img/og-cover.jpg` is deliberately a JPEG and a different crop: social scrapers are the one
 consumer whose WebP support is still uneven, and they want a 1200x630 card.
