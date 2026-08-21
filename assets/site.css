@@ -360,6 +360,7 @@ section { padding-block: clamp(3.5rem, 9vh, 6rem); }
 .section-head { max-width: var(--measure); margin-block-end: 2.5rem; }
 .section-head h2 { font-size: var(--t-3); letter-spacing: -0.015em; margin-block: 0.6rem 0.75rem; }
 .section-head p { color: var(--dim); }
+.section-head p + p { margin-block-start: 0.85rem; }
 
 /* Use cases: prose in a readable column, then the screenshot at FULL container width.
    Not an icon grid -- each one is a concrete thing you do on a given night, so it gets a real
@@ -455,6 +456,19 @@ figcaption {
 @media (max-width: 860px) {
     .demo-grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ---------- the Store link ---------- */
+
+/* The install call to action is a plain .btn in a .cta-row, so it needs nothing of its own; only the
+   note under it does. Amber stays reserved for the live-demo button, which is why this one is ghost. */
+.store-note {
+    margin-block-start: 1.75rem;
+    max-width: var(--measure);
+    font-size: var(--t--1);
+    color: var(--dim);
+}
+
+.store-note a { color: var(--teal); text-underline-offset: 3px; }
 
 /* ---------- the catalogue ---------- */
 

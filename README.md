@@ -23,8 +23,31 @@ which is what renders on the organisation's GitHub profile. The two are **mainta
 deliberate choice, so this page can say things the profile README should not. When a library is
 added or renamed, update both.
 
-Two repositories currently on the site are missing from that profile README: `WebGl.Renderer` and
-`LAN.Lib`.
+Both currently list the same 19 repositories; the site adds the Store link and the screenshots on
+top of that.
+
+## The Microsoft Store link
+
+The `#viewer` section links to **Astro Photo Viewer** (store id `9PMDZP16TGBG`), which is
+`tianwen-fits` packaged as MSIX -- see `packaging/windows/msix/README.md` in `SharpAstro/tianwen` for
+how that package is built and why it ships through the Store at all.
+
+It is a plain `<a>` in a `.cta-row`, **not** Microsoft's `<ms-store-badge>` web component, which was
+tried and removed. The component pulls a module, a badge SVG and a hidden iframe from
+`get.microsoft.com`; that would be the only third-party request the published page makes, when the
+fonts are self-hosted for precisely that reason. It also renders *nothing* when the module is blocked,
+being a custom element -- so it needs a fallback link anyway, and the fallback alone is the whole
+feature. Two of its own quirks are worth recording in case it ever comes back:
+
+- Its `theme` attribute names the **artwork, not the page**: `theme="dark"` is the dark-on-pale badge,
+  which belongs on a *light* background. `theme="auto"` follows the OS preference only, so it would
+  disagree with this site's theme toggle and has to be set by hand, inverted.
+- `animation` cannot be changed after the element upgrades: it appends a stylesheet per change and
+  never removes the previous one, so the hover transform survives being switched off. Honouring
+  `prefers-reduced-motion` means setting the attribute before its module runs.
+
+The link deliberately carries no `hl`/`gl` query, so the Store localises for whoever opens it, and no
+version number, which would go stale on every submission.
 
 ## Screenshots
 

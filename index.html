@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SharpAstro — a .NET ecosystem for astrophotography</title>
     <meta name="description"
-          content="Open-source .NET libraries and applications for astrophotography: device control over ASCOM, Alpaca and native SDKs, unattended imaging sessions, plate solving, and image processing. Try the sky atlas in your browser." />
+          content="Open-source .NET libraries and applications for astrophotography: device control over ASCOM, Alpaca and native SDKs, unattended imaging sessions, plate solving, and image processing. Try the sky atlas in your browser, or install the image viewer from the Microsoft Store." />
     <link rel="canonical" href="https://sharpastro.github.io/" />
 
     <meta property="og:type" content="website" />
@@ -46,6 +46,7 @@
         <nav>
             <a href="#use-cases" data-optional>Use&nbsp;cases</a>
             <a href="#demo" data-optional>Live&nbsp;demo</a>
+            <a href="#viewer" data-optional>Download</a>
             <a href="#ecosystem">Ecosystem</a>
             <a href="https://github.com/SharpAstro">GitHub</a>
             <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Switch between the dark and light theme">
@@ -254,6 +255,46 @@
                     <div class="shot"><img src="assets/img/web-app.webp" width="1440" height="900" alt="The in-browser sky atlas rendering stars, constellation figures and the horizon through WebGL." loading="lazy" /></div>
                     <figcaption>The same atlas, drawn through WebGL instead of Vulkan.</figcaption>
                 </figure>
+            </div>
+        </section>
+
+        <section id="viewer">
+            <div class="wrap">
+                <div class="section-head">
+                    <p class="eyebrow">Install</p>
+                    <h2>The image viewer is in the Microsoft Store</h2>
+                    <p>
+                        <strong>Astro Photo Viewer</strong> is the suite's viewer shipped on its own: FITS,
+                        SER planetary video, TIFF and Canon CR2/CR3, with stretch and Bayer demosaic done on
+                        the GPU, star detection with HFD-sized circles, a WCS grid and catalogue annotations
+                        over a plate-solved frame, and a live lucky-imaging stack with wavelet sharpening for
+                        planetary video.
+                    </p>
+                    <p>
+                        Microsoft re-signs the package during certification, so it installs with no
+                        SmartScreen warning at all and updates itself. Windows&nbsp;10 version&nbsp;2004 or
+                        newer, x64 and ARM64. Double-clicking a <code>.fits</code>, <code>.fit</code>,
+                        <code>.fts</code>, <code>.fz</code> or <code>.ser</code> opens it in the window
+                        already showing that folder.
+                    </p>
+                </div>
+
+                <!-- Deliberately our own button rather than Microsoft's <ms-store-badge> component.
+                     The badge would pull a module, an SVG and a hidden iframe from get.microsoft.com,
+                     which is the one thing this page does not do anywhere else -- the fonts are
+                     self-hosted for exactly that reason -- and it renders nothing at all when that
+                     module is blocked. A plain link cannot fail that way. -->
+                <div class="cta-row">
+                    <a class="btn btn-ghost" href="https://apps.microsoft.com/detail/9pmdzp16tgbg">
+                        Get it from the Microsoft Store &rarr;
+                    </a>
+                </div>
+
+                <p class="store-note">
+                    Linux and macOS run the same viewer from a self-contained native AOT archive on
+                    <a href="https://github.com/SharpAstro/tianwen/releases">GitHub Releases</a>, which also
+                    carries the Windows archives for anyone who would rather not install from the Store.
+                </p>
             </div>
         </section>
 
