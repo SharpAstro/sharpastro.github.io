@@ -1,0 +1,201 @@
+/* Guide pages.
+ *
+ * Loaded ONLY by the pages under /guide/, on top of site.css, which keeps the landing page's
+ * stylesheet untouched -- the landing page is a marketing layout (full-bleed sections, a hero, a
+ * two-column use-case grid) and a guide is a reading layout, and the two want opposite things from
+ * almost every rule. Everything below is expressed in site.css's own custom properties, so a theme
+ * change or a type-scale change reaches these pages for free.
+ */
+
+.guide {
+    padding: clamp(2rem, 5vw, 4rem) 0 5rem;
+}
+
+/* A reading column, not the landing page's grid. --measure is the site's own 62ch. */
+.guide .wrap > * {
+    max-width: var(--measure);
+}
+
+/* ...but the things that are not prose get the full width: a wide table squeezed into 62ch wraps
+   every cell, and a screenshot loses the detail it was taken for. A callout is prose and stays in
+   the column -- it is an aside to what is being read, not a break from it. */
+.guide .wrap > table,
+.guide .wrap > figure {
+    max-width: none;
+}
+
+.guide h1 {
+    font-size: var(--t-3);
+    line-height: 1.15;
+    margin: 0 0 0.5rem;
+}
+
+.guide .lede {
+    font-size: var(--t-1);
+    color: var(--dim);
+    margin: 0 0 2.5rem;
+}
+
+.guide h2 {
+    font-size: var(--t-2);
+    line-height: 1.25;
+    margin: 3rem 0 0.75rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line);
+}
+
+.guide h3 {
+    font-size: var(--t-1);
+    margin: 2rem 0 0.5rem;
+}
+
+.guide p,
+.guide li {
+    line-height: 1.65;
+}
+
+/* site.css gives its paragraphs their rhythm through the landing page's own section selectors, so a
+   bare <p> in here inherits none and consecutive paragraphs run together into one slab. */
+.guide p {
+    margin: 0 0 1.1rem;
+}
+
+.guide ul,
+.guide ol {
+    padding-left: 1.25rem;
+}
+
+.guide li + li {
+    margin-top: 0.4rem;
+}
+
+/* Contents. A plain list rather than a sticky sidebar: the page is one column on every width, and a
+   sidebar that collapses on mobile is two layouts to keep working for one affordance. */
+.toc {
+    margin: 0 0 2rem;
+    padding: 1rem 1.25rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+}
+
+.toc ol {
+    margin: 0.5rem 0 0;
+    columns: 2;
+    column-gap: 2rem;
+}
+
+@media (max-width: 44rem) {
+    .toc ol {
+        columns: 1;
+    }
+}
+
+/* A key, drawn as one. Sized in ch so a two-character chord and a five-character one still line up
+   in a column of them. */
+.guide kbd {
+    display: inline-block;
+    min-width: 1.6ch;
+    padding: 0.15em 0.45em;
+    font: 600 var(--t--1)/1.4 ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    color: var(--text);
+    background: var(--panel-2);
+    border: 1px solid var(--line-strong);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+.guide table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25rem 0 2rem;
+    font-size: var(--t-0);
+}
+
+.guide th,
+.guide td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.55rem 0.9rem 0.55rem 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.guide th {
+    font-size: var(--t--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-weight: 600;
+}
+
+/* The key column: wide enough for the longest chord on the page, so the descriptions align. */
+.guide td:first-child {
+    width: 14rem;
+    white-space: nowrap;
+}
+
+/* A note worth stopping for. Two kinds, because "this will surprise you" and "this is a real limit
+   of the current version" are different promises to the reader. */
+.callout {
+    margin: 1.5rem 0;
+    padding: 0.9rem 1.15rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 8px 8px 0;
+}
+
+.callout.limit {
+    border-left-color: var(--amber);
+}
+
+.callout p {
+    margin: 0;
+}
+
+.callout p + p {
+    margin-top: 0.6rem;
+}
+
+.callout .label {
+    display: block;
+    font-size: var(--t--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 0.25rem;
+}
+
+.guide code {
+    font-size: 0.92em;
+    padding: 0.1em 0.35em;
+    background: var(--panel-2);
+    border-radius: 4px;
+}
+
+.guide pre {
+    overflow-x: auto;
+    padding: 0.9rem 1.15rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: var(--t--1);
+    line-height: 1.55;
+}
+
+.guide pre code {
+    padding: 0;
+    background: none;
+}
+
+/* Breadcrumb back to the site. The topbar brand goes to the root; this says where you are. */
+.crumb {
+    font-size: var(--t--1);
+    color: var(--dim);
+    margin: 0 0 1.25rem;
+}
+
+.crumb a {
+    color: var(--dim);
+}

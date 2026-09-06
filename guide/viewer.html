@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Astro Photo Viewer — user guide — SharpAstro</title>
+    <meta name="description"
+          content="How to use Astro Photo Viewer: opening FITS, TIFF, Canon RAW and SER files, the screen stretch, colour calibration, plate solving, star measurement, the A/B split and blink comparison, planetary stacking, and every keyboard shortcut." />
+    <link rel="canonical" href="https://sharpastro.github.io/guide/viewer.html" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Astro Photo Viewer — user guide" />
+    <meta property="og:description"
+          content="Opening files, the screen stretch, colour calibration, plate solving, comparing frames, planetary stacking, and every keyboard shortcut." />
+    <meta property="og:url" content="https://sharpastro.github.io/guide/viewer.html" />
+    <meta property="og:image" content="https://sharpastro.github.io/assets/img/og-cover.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔭</text></svg>" />
+
+    <link rel="preload" href="../assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="../assets/fonts/plex-serif-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="../assets/site.css" />
+    <link rel="stylesheet" href="../assets/guide.css" />
+
+    <!-- Applied before first paint so a chosen theme never flashes the other one. -->
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("sharpastro-theme");
+                if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+            } catch (e) { /* private mode: fall through to the OS preference */ }
+        })();
+    </script>
+</head>
+
+<body>
+    <header class="topbar">
+        <a class="brand" href="/"><span class="sharp">Sharp</span>Astro</a>
+        <nav>
+            <a href="/#viewer" data-optional>The&nbsp;viewer</a>
+            <a href="/#ecosystem">Ecosystem</a>
+            <a href="https://github.com/SharpAstro/tianwen">GitHub</a>
+            <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Switch between the dark and light theme">
+                Theme
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="guide">
+            <div class="wrap">
+
+                <p class="crumb"><a href="/">SharpAstro</a> &rarr; Guides &rarr; Astro Photo Viewer</p>
+
+                <p class="eyebrow">User guide</p>
+                <h1>Astro Photo Viewer</h1>
+                <p class="lede">
+                    A viewer for the frames a night actually produced: FITS, planetary SER video, TIFF
+                    and Canon RAW. It stretches and demosaics on the GPU, measures the stars it finds,
+                    plate-solves a frame and draws a catalogue over it, and compares two processing
+                    states side by side. This page covers everything the shipping version does.
+                </p>
+
+                <nav class="toc" aria-label="Contents">
+                    <p class="eyebrow">On this page</p>
+                    <ol>
+                        <li><a href="#install">Installing</a></li>
+                        <li><a href="#opening">Opening images</a></li>
+                        <li><a href="#moving">Getting around</a></li>
+                        <li><a href="#stretch">Making the image visible</a></li>
+                        <li><a href="#colour">Colour</a></li>
+                        <li><a href="#measuring">Stars, solving and the sky</a></li>
+                        <li><a href="#comparing">Comparing frames</a></li>
+                        <li><a href="#planetary">Planetary video</a></li>
+                        <li><a href="#enhance">AI enhancement</a></li>
+                        <li><a href="#saving">Saving what you see</a></li>
+                        <li><a href="#keys">Every keyboard shortcut</a></li>
+                        <li><a href="#trouble">When something looks wrong</a></li>
+                    </ol>
+                </nav>
+
+                <h2 id="install">Installing</h2>
+                <p>
+                    On Windows, install it from the Microsoft Store. It updates itself from there, and
+                    the Store build registers the file associations for you &mdash; you still have to
+                    pick it as the default application for a file type in Windows Settings, which is
+                    Windows' choice to make, not the app's.
+                </p>
+                <div class="cta-row">
+                    <a class="btn btn-ghost" href="https://apps.microsoft.com/detail/9pmdzp16tgbg">Get it from the Microsoft Store &rarr;</a>
+                </div>
+                <p class="detail">
+                    Windows&nbsp;10 version&nbsp;2004 or newer, x64 and ARM64. Linux and macOS run the
+                    same viewer from a self-contained archive on
+                    <a href="https://github.com/SharpAstro/tianwen/releases">GitHub Releases</a> &mdash;
+                    no runtime to install, and no installer either: unpack it and run
+                    <code>tianwen-fits</code>. An unpackaged install can register its own file
+                    associations with <code>tianwen-fits --register</code>.
+                </p>
+
+                <h2 id="opening">Opening images</h2>
+                <p>
+                    Drag a file onto the window, use the folder button at the top left, or pass a path
+                    on the command line. The formats are:
+                </p>
+                <table>
+                    <thead>
+                        <tr><th>Format</th><th>Notes</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.fits</code> <code>.fit</code> <code>.fts</code> <code>.fz</code></td>
+                            <td>Including tile-compressed <code>.fz</code>, and multi-extension files where the image is not the first block.</td>
+                        </tr>
+                        <tr>
+                            <td><code>.tif</code> <code>.tiff</code></td>
+                            <td>8-, 16-bit and 32-bit float, including CMYK and Deflate/LZW compression.</td>
+                        </tr>
+                        <tr>
+                            <td><code>.cr2</code> <code>.cr3</code></td>
+                            <td>Canon RAW, decoded to its native sensor data rather than the embedded JPEG.</td>
+                        </tr>
+                        <tr>
+                            <td><code>.ser</code></td>
+                            <td>Planetary video. Opens in playback mode &mdash; see <a href="#planetary">Planetary video</a>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <strong>Opening one file opens its folder.</strong> Every supported image beside it
+                    appears in the file list on the left, so stepping through a night's subs is
+                    <kbd>&uarr;</kbd> and <kbd>&darr;</kbd> rather than a sequence of file dialogs. Drag
+                    the divider to resize the list, or press <kbd>L</kbd> to hide it.
+                </p>
+                <div class="callout">
+                    <span class="label">Worth knowing</span>
+                    <p>
+                        Double-clicking a second file from the same folder hands it to the window
+                        <em>already showing that folder</em> instead of starting another copy of the
+                        app. Each folder gets one window. To deliberately open a second window on the
+                        same folder &mdash; two views of one directory, side by side &mdash; start it
+                        with <code>--new-window</code>.
+                    </p>
+                </div>
+
+                <h2 id="moving">Getting around</h2>
+                <p>
+                    Drag the image to pan and use the wheel to zoom. <kbd>F</kbd> fits the image to the
+                    window, <kbd>R</kbd> goes to 1:1, and <kbd>Z</kbd> opens a menu with the fixed
+                    ratios (<kbd>Ctrl+2</kbd> to <kbd>Ctrl+9</kbd> are 1:2 through
+                    1:9). The zoom button in the toolbar is also the read-out: it shows the current
+                    scale, so there is no second copy of that number anywhere else.
+                </p>
+                <p>
+                    Three panels toggle independently: <kbd>L</kbd> the file list, <kbd>I</kbd> the info
+                    panel on the right (metadata, per-channel statistics, white-balance sliders and the
+                    cursor read-out), and <kbd>V</kbd> the histogram, with <kbd>Shift+V</kbd>
+                    switching it to a log scale. <kbd>F11</kbd> is fullscreen and <kbd>Esc</kbd> quits.
+                </p>
+
+                <h2 id="stretch">Making the image visible</h2>
+                <p>
+                    A linear astronomical frame is nearly black: almost all of its data sits in the
+                    bottom fraction of a percent of the range. A <em>screen stretch</em> is a display
+                    curve that makes that visible without altering a single stored pixel. Everything in
+                    this section changes only what you are looking at.
+                </p>
+                <p>
+                    <kbd>T</kbd> turns the stretch on and off &mdash; the fastest way to see what the
+                    data actually looks like. The mode button beside it picks how the three channels are
+                    treated:
+                </p>
+                <table>
+                    <thead>
+                        <tr><th>Mode</th><th>What it does</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Auto</td><td>Linked when a colour calibration is applied, unlinked otherwise. The default, and usually right.</td></tr>
+                        <tr><td>Linked</td><td>One curve for all three channels, so an existing colour balance survives as colour.</td></tr>
+                        <tr><td>Unlinked</td><td>Each channel gets its own curve, which neutralises the background. Good for judging structure, and it will discard a real colour cast along with an unwanted one.</td></tr>
+                        <tr><td>Luma</td><td>Stretches luminance and blends the colour back, so saturation does not climb with the curve.</td></tr>
+                    </tbody>
+                </table>
+                <p>
+                    <kbd>+</kbd> and <kbd>&minus;</kbd> step through stretch strength presets.
+                    <kbd>B</kbd> cycles a curves boost and <kbd>Shift+B</kbd> changes which
+                    curve it applies; <kbd>H</kbd> cycles HDR highlight compression, which pulls back a
+                    blown core without flattening the rest. <kbd>C</kbd> cycles the channel view between
+                    RGB and a single channel, and <kbd>D</kbd> cycles the demosaic algorithm for a Bayer
+                    sensor &mdash; the small swatch on that button is the sensor's actual CFA phase, read
+                    from the file.
+                </p>
+
+                <h2 id="colour">Colour</h2>
+                <p>
+                    <kbd>W</kbd> runs a photometric colour calibration and toggles whether it is applied.
+                    Rather than guessing from the image's own average, it matches the stars in the frame
+                    against a catalogue and solves the channel ratios that make stellar colours come out
+                    right. Hovering the button afterwards reports exactly what it measured &mdash; the
+                    correction triple, how many stars survived the fit, and the white reference &mdash;
+                    so the result is checkable rather than a black box.
+                </p>
+                <p>
+                    <kbd>N</kbd> neutralises the background separately, and the three sliders in the info
+                    panel are a manual white balance layered on top of whichever calibration is active.
+                    Turning the calibration off restores the balance you had before it ran.
+                </p>
+                <div class="callout limit">
+                    <span class="label">Current limitation</span>
+                    <p>
+                        Photometric calibration is <strong>broadband only</strong>. A narrowband stack has
+                        no colour path: the calibration needs stellar colours to match against, and a
+                        3&nbsp;nm passband does not carry them. Narrowband images still stretch, measure
+                        and solve normally.
+                    </p>
+                </div>
+
+                <h2 id="measuring">Stars, solving and the sky</h2>
+                <p>
+                    <kbd>S</kbd> detects stars and draws them, and the status bar reports the count with
+                    the average HFD and FWHM &mdash; the two numbers that say whether a sub is worth
+                    keeping. It measures the frame as loaded, so it is a judgement about that exposure
+                    rather than about the stack.
+                </p>
+                <p>
+                    <kbd>P</kbd> plate-solves the frame. A solve is what turns pixel coordinates into sky
+                    coordinates, and it unlocks the rest: <kbd>G</kbd> draws a WCS coordinate grid, and
+                    <kbd>O</kbd> labels the deep-sky objects the frame contains. The built-in solver
+                    needs no external program and no internet; if you have ASTAP or Astrometry.net
+                    installed it will use those as fallbacks.
+                </p>
+                <p>
+                    With the pointer over the image, the info panel's cursor block shows the pixel
+                    position, its per-channel value in both normalised and 16-bit form, and &mdash; once
+                    solved &mdash; the RA and Dec under the cursor. <strong>Right-click copies any of
+                    it</strong>: the menu carries the coordinates in both sexagesimal and decimal
+                    degrees, the pixel value, the position, and a link that opens the in-browser sky
+                    atlas looking at exactly that part of the sky, at the frame's own field of view and
+                    at the moment the frame was taken. Every entry shows its value in the menu, so you
+                    can read the answer without copying anything.
+                </p>
+
+                <h2 id="comparing">Comparing frames</h2>
+                <h3>A/B split &mdash; one frame, two processing states</h3>
+                <p>
+                    <kbd>A</kbd> puts a divider down the middle of the image. The right half follows your
+                    controls; the left half is pinned to how things looked when you pressed it. Drag the
+                    divider to sweep the comparison across the frame. Each half is labelled with what
+                    makes it different from the other, so you are never guessing which side is which.
+                    <kbd>Shift+A</kbd> re-pins the left half to the current settings &mdash;
+                    the "pin what I have, then fiddle" gesture. After an AI enhancement the split
+                    switches to comparing <em>pixels</em>, before against after, because that is what you
+                    want to see at that moment.
+                </p>
+                <h3>Blink &mdash; two frames, one processing state</h3>
+                <p>
+                    Comparing subs by stepping between them normally fails for a reason that is not
+                    obvious: each frame gets its own auto-stretch, so a genuine brightness difference is
+                    hidden by the display adapting to it. The viewer therefore <strong>holds the display
+                    mapping across frames of the same shape</strong> by default &mdash; the second frame
+                    is shown with the first frame's stretch, so what you see differing is the data.
+                </p>
+                <p>
+                    The status bar says <code>Held to &lt;file&gt;</code> whenever that is happening, and
+                    <kbd>Shift+H</kbd> releases or re-takes the hold.
+                    <kbd>Ctrl+Space</kbd> jumps back to the held frame.
+                    <kbd>Space</kbd> blinks forward through the file list and
+                    <kbd>Shift+Space</kbd> backward; pressing the same direction again pauses,
+                    pressing the other one reverses. A frame the held mapping cannot describe &mdash; a
+                    different size, sensor or filter &mdash; stops the blink and says which file it was.
+                </p>
+
+                <h2 id="planetary">Planetary video</h2>
+                <p>
+                    Opening a <code>.ser</code> switches the viewer into playback. <kbd>Space</kbd> plays
+                    and pauses, <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> step one frame,
+                    <kbd>Home</kbd> and <kbd>End</kbd> jump to the first and last, and the scrub bar
+                    under the image seeks.
+                </p>
+                <p>
+                    <kbd>K</kbd> switches between the raw frame and a <strong>rolling lucky-imaging
+                    stack</strong> that follows the playhead: it grades frames by sharpness, keeps the
+                    best, aligns and integrates them, and updates as you scrub. Six wavelet-sharpen
+                    sliders in the info panel work over the result. All of it runs off the render thread,
+                    so the sliders stay responsive however long a stack takes.
+                </p>
+
+                <h2 id="enhance">AI enhancement</h2>
+                <p>
+                    <kbd>E</kbd> runs an AI enhancement &mdash; star removal, deconvolution, denoising or
+                    gradient correction, depending on what is available. Right-clicking the button cycles
+                    which backend is used. Pressing <kbd>E</kbd> again turns the result off, and while
+                    one is running it cancels.
+                </p>
+                <p>
+                    The viewer ships with its own denoising model for one-shot-colour images, so that one
+                    works out of the box. The rest are <em>other people's</em> models, and the viewer
+                    reads them wherever their own installers put them &mdash; nothing is copied and no
+                    files are duplicated. If you have RC-Astro's tools or SETI Astro's SAS Pro installed,
+                    they are found automatically; if not, those roles are simply unavailable. The
+                    <kbd>?</kbd> panel lists which backend resolved, which products are licensed, and
+                    which model files are missing.
+                </p>
+
+                <h2 id="saving">Saving what you see</h2>
+                <p>
+                    The save button writes the image <em>as displayed</em> &mdash; stretch, white balance,
+                    curves, HDR and channel view all baked in &mdash; as a 16-bit PNG, a JPEG, or a
+                    32-bit float TIFF.
+                </p>
+                <p>
+                    <strong>It is not a screenshot.</strong> The pixels are re-rendered at the image's own
+                    resolution, so a 9576&times;6388 master saves at 9576&times;6388 from a
+                    1280-pixel-wide window.
+                </p>
+                <div class="callout limit">
+                    <span class="label">Current limitation</span>
+                    <p>
+                        What is drawn <em>over</em> the image is not included: no coordinate grid, no star
+                        markers, no object labels. Saving the annotated view is a separate feature and is
+                        not in this version.
+                    </p>
+                </div>
+
+                <h2 id="keys">Every keyboard shortcut</h2>
+                <p>
+                    The same list is in the app, behind the <kbd>?</kbd> button at the top right, along
+                    with the version you are running.
+                </p>
+
+                <h3>View</h3>
+                <table>
+                    <tbody>
+                        <tr><td><kbd>Wheel</kbd> / <kbd>Ctrl+Wheel</kbd></td><td>Zoom</td></tr>
+                        <tr><td><kbd>Ctrl</kbd>&nbsp;<kbd>+</kbd> / <kbd>Ctrl</kbd>&nbsp;<kbd>&minus;</kbd></td><td>Zoom in / out</td></tr>
+                        <tr><td><kbd>F</kbd> / <kbd>Ctrl+0</kbd></td><td>Fit to window</td></tr>
+                        <tr><td><kbd>R</kbd> / <kbd>Ctrl+1</kbd></td><td>Zoom 1:1</td></tr>
+                        <tr><td><kbd>Ctrl+2</kbd> &hellip; <kbd>Ctrl+9</kbd></td><td>Zoom 1:N</td></tr>
+                        <tr><td><kbd>Z</kbd></td><td>Zoom menu (fit / 1:1 / 1:N)</td></tr>
+                        <tr><td><kbd>L</kbd></td><td>File list</td></tr>
+                        <tr><td><kbd>I</kbd></td><td>Info panel</td></tr>
+                        <tr><td><kbd>V</kbd> / <kbd>Shift+V</kbd></td><td>Histogram / log scale</td></tr>
+                        <tr><td><kbd>F11</kbd></td><td>Fullscreen</td></tr>
+                        <tr><td><kbd>Esc</kbd></td><td>Quit</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Display</h3>
+                <table>
+                    <tbody>
+                        <tr><td><kbd>T</kbd></td><td>Screen stretch on / off</td></tr>
+                        <tr><td><kbd>+</kbd> / <kbd>&minus;</kbd></td><td>Stretch strength preset</td></tr>
+                        <tr><td><kbd>B</kbd> / <kbd>Shift+B</kbd></td><td>Curves boost / curve mode</td></tr>
+                        <tr><td><kbd>H</kbd></td><td>HDR highlight compression</td></tr>
+                        <tr><td><kbd>C</kbd></td><td>Channel view (RGB or one channel)</td></tr>
+                        <tr><td><kbd>D</kbd></td><td>Demosaic algorithm</td></tr>
+                        <tr><td><kbd>W</kbd></td><td>Photometric colour calibration on / off</td></tr>
+                        <tr><td><kbd>N</kbd></td><td>Neutralise the background</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Measuring</h3>
+                <table>
+                    <tbody>
+                        <tr><td><kbd>S</kbd></td><td>Detect stars, show HFD / FWHM</td></tr>
+                        <tr><td><kbd>P</kbd></td><td>Plate solve this frame</td></tr>
+                        <tr><td><kbd>G</kbd></td><td>WCS coordinate grid</td></tr>
+                        <tr><td><kbd>O</kbd></td><td>Deep-sky object overlays</td></tr>
+                        <tr><td><kbd>E</kbd></td><td>AI enhance (right-click the button to change backend)</td></tr>
+                        <tr><td>Right-click</td><td>Copy RA/Dec, pixel value, position, or a sky-atlas link</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Comparing</h3>
+                <table>
+                    <tbody>
+                        <tr><td><kbd>A</kbd> / <kbd>Shift+A</kbd></td><td>Before / after split; re-pin</td></tr>
+                        <tr><td><kbd>Shift+H</kbd></td><td>Hold / release the display across frames</td></tr>
+                        <tr><td><kbd>Space</kbd></td><td>Blink the file list forward (play / pause for a sequence)</td></tr>
+                        <tr><td><kbd>Shift+Space</kbd></td><td>Blink backward</td></tr>
+                        <tr><td><kbd>Ctrl+Space</kbd></td><td>Back to the frame the display is held to</td></tr>
+                        <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Previous / next file</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Sequences (SER)</h3>
+                <table>
+                    <tbody>
+                        <tr><td><kbd>Space</kbd></td><td>Play / pause</td></tr>
+                        <tr><td><kbd>&larr;</kbd> / <kbd>&rarr;</kbd></td><td>Step one frame</td></tr>
+                        <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>First / last frame</td></tr>
+                        <tr><td><kbd>K</kbd></td><td>Raw / stacked view</td></tr>
+                    </tbody>
+                </table>
+
+                <h2 id="trouble">When something looks wrong</h2>
+                <p>
+                    The <kbd>?</kbd> button at the top right is the first place to look. It reports the
+                    exact version and build, where the app is installed, and the state of every AI
+                    backend &mdash; which one resolved, what is licensed, and which model files are
+                    missing. "The viewer from the Store" is not enough detail for a bug report; that
+                    panel is.
+                </p>
+                <p>
+                    Logs are written per run to
+                    <code>%LOCALAPPDATA%\TianWen\Logs\&lt;date&gt;\FitsViewer_*.log</code> on Windows, and
+                    to <code>~/.local/share/TianWen/Logs/</code> on Linux.
+                </p>
+                <div class="callout limit">
+                    <span class="label">Known limitations in this version</span>
+                    <p>
+                        Saving writes the clean image without the grid, star markers or labels drawn over
+                        it. Photometric colour calibration is broadband only. On a mosaic frame the
+                        single-channel views show the raw mosaic rather than the separated colour planes.
+                    </p>
+                </div>
+                <p>
+                    Bugs and feature requests go to
+                    <a href="https://github.com/SharpAstro/tianwen/issues">the issue tracker</a>. The
+                    viewer is part of <a href="https://github.com/SharpAstro/tianwen">tianwen</a>, which
+                    is open source under the AGPL.
+                </p>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap footer-grid">
+            <p>
+                <a href="https://github.com/SharpAstro">github.com/SharpAstro</a>
+            </p>
+            <p>
+                <code>tianwen</code> is <a href="https://github.com/SharpAstro/tianwen/blob/main/LICENSE">AGPL-3.0-or-later</a>, with an <a href="https://github.com/SharpAstro/tianwen/blob/main/LICENSE.EXCEPTION">additional permission</a> for linking proprietary vendor SDKs. The general-purpose libraries are MIT.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            var btn = document.getElementById("theme-toggle");
+            if (!btn) return;
+            btn.addEventListener("click", function () {
+                var explicit = document.documentElement.getAttribute("data-theme");
+                var current = explicit
+                    || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+                var next = current === "dark" ? "light" : "dark";
+                document.documentElement.setAttribute("data-theme", next);
+                try { localStorage.setItem("sharpastro-theme", next); } catch (e) { /* private mode */ }
+            });
+        })();
+    </script>
+</body>
+
+</html>
