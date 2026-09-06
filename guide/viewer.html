@@ -309,21 +309,30 @@
 
                 <h2 id="saving">Saving what you see</h2>
                 <p>
-                    The save button writes the image <em>as displayed</em> &mdash; stretch, white balance,
-                    curves, HDR and channel view all baked in &mdash; as a 16-bit PNG, a JPEG, or a
-                    32-bit float TIFF.
+                    The save button offers two things. <strong>Image as displayed</strong> writes the
+                    picture with the stretch, white balance, curves, HDR and channel view baked in, and
+                    nothing else &mdash; as a 16-bit PNG, a JPEG, or a 32-bit float TIFF.
+                    <strong>Image with overlays</strong> writes the same picture with the coordinate
+                    grid, star markers and object labels drawn on it, as a PNG or a JPEG.
                 </p>
                 <p>
-                    <strong>It is not a screenshot.</strong> The pixels are re-rendered at the image's own
-                    resolution, so a 9576&times;6388 master saves at 9576&times;6388 from a
-                    1280-pixel-wide window.
+                    <strong>Neither is a screenshot.</strong> The pixels are re-rendered at the image's
+                    own resolution, so a 9576&times;6388 master saves at 9576&times;6388 from a
+                    1280-pixel-wide window &mdash; and the annotation is drawn at that size too, rather
+                    than scaled up from the screen. Whichever overlays are switched on when you save are
+                    the ones you get; turn a grid off first and it will not be in the file.
                 </p>
-                <div class="callout limit">
-                    <span class="label">Current limitation</span>
+                <p>
+                    The annotated file is suggested as <code>&lt;name&gt;-annotated.png</code>, because
+                    the two saves are of one picture and land in the same folder. Right-clicking the save
+                    button skips the menu and writes the clean version straight away.
+                </p>
+                <div class="callout">
+                    <span class="label">Worth knowing</span>
                     <p>
-                        What is drawn <em>over</em> the image is not included: no coordinate grid, no star
-                        markers, no object labels. Saving the annotated view is a separate feature and is
-                        not in this version.
+                        The annotated save is 8 bits per channel. The clean one can be 16-bit PNG or float
+                        TIFF, so that is the one to keep if you are going on to edit it &mdash; the
+                        annotated file is for showing someone what is in the frame.
                     </p>
                 </div>
 
