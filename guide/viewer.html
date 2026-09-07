@@ -193,7 +193,11 @@
                     blown core without flattening the rest. <kbd>C</kbd> cycles the channel view between
                     RGB and a single channel, and <kbd>D</kbd> cycles the demosaic algorithm for a Bayer
                     sensor &mdash; the small swatch on that button is the sensor's actual CFA phase, read
-                    from the file.
+                    from the file. The demosaic starts on <strong>Auto</strong>, which reads the answer
+                    off the file rather than asking you for it: a still colour frame is demosaiced with
+                    VNG, which leaves no dark ring around a bright star, and a SER video with MHC, so a
+                    frame you are scrubbing looks like the master the planetary stacker will build from
+                    it. A mono or already-colour frame is left alone.
                 </p>
 
                 <h2 id="colour">Colour</h2>
@@ -309,9 +313,12 @@
 
                 <h2 id="saving">Saving what you see</h2>
                 <p>
-                    The save button offers two things. <strong>Image as displayed</strong> writes the
-                    picture with the stretch, white balance, curves, HDR and channel view baked in, and
-                    nothing else &mdash; as a 16-bit PNG, a JPEG, or a 32-bit float TIFF.
+                    The save button offers three things. <strong>Image as displayed (16-bit)</strong>
+                    and <strong>Image as displayed (8-bit)</strong> write the picture with the stretch,
+                    white balance, curves, HDR and channel view baked in, and nothing else. The choice
+                    between them is the depth of a PNG, and it binds on a <code>.png</code> name alone:
+                    a JPEG is 8-bit because baseline JPEG is, and a TIFF here is always 32-bit float,
+                    so typing either of those extensions still writes what the name asked for.
                     <strong>Image with overlays</strong> writes the same picture with the coordinate
                     grid, star markers and object labels drawn on it, as a PNG or a JPEG.
                 </p>
@@ -333,6 +340,14 @@
                         The annotated save is 8 bits per channel. The clean one can be 16-bit PNG or float
                         TIFF, so that is the one to keep if you are going on to edit it &mdash; the
                         annotated file is for showing someone what is in the frame.
+                    </p>
+                    <p>
+                        16-bit is the default for the clean save, and the reason inverts the intuition.
+                        On a single sub the noise straddles several 8-bit steps and dithers them, so
+                        nothing bands. On a deep stack or a denoised master the noise floor drops below
+                        one step, and a smooth gradient turns into visible contours. 8 bits is safest on
+                        the worst data and most dangerous on the best, which is why it is a choice per
+                        save rather than a setting.
                     </p>
                 </div>
 
@@ -423,8 +438,7 @@
                 <div class="callout limit">
                     <span class="label">Known limitations in this version</span>
                     <p>
-                        Saving writes the clean image without the grid, star markers or labels drawn over
-                        it. Photometric colour calibration is broadband only. On a mosaic frame the
+                        Photometric colour calibration is broadband only. On a mosaic frame the
                         single-channel views show the raw mosaic rather than the separated colour planes.
                     </p>
                 </div>
