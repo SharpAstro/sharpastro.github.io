@@ -19,8 +19,10 @@
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔭</text></svg>" />
+    <!-- The mark itself, inline: an eclipsed moon with the sharp in the shadow bite. Bright teal
+         rather than the light theme's darker one, because a favicon lands on browser chrome of
+         either colour and the pale mint is the one that reads on both. -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><defs><linearGradient id=%22u%22 x1=%22.15%22 y1=%22.15%22 x2=%22.85%22 y2=%22.95%22><stop offset=%220%22 stop-color=%22%23ffc98a%22/><stop offset=%22.45%22 stop-color=%22%23d4552a%22/><stop offset=%221%22 stop-color=%22%235c1409%22/></linearGradient><mask id=%22b%22><rect width=%2232%22 height=%2232%22 fill=%22%23fff%22/><circle cx=%2224.5%22 cy=%228%22 r=%2210.4%22 fill=%22%23000%22/></mask></defs><circle cx=%2214.6%22 cy=%2217.4%22 r=%2212.2%22 fill=%22url(%23u)%22 mask=%22url(%23b)%22/><g fill=%22%2366ddcc%22><rect x=%2220.4%22 y=%221.6%22 width=%221.6%22 height=%2214.6%22 rx=%22.8%22/><rect x=%2226.4%22 y=%221.6%22 width=%221.6%22 height=%2214.6%22 rx=%22.8%22/><g transform=%22rotate(-12 24.2 8.9)%22><rect x=%2217.4%22 y=%225.2%22 width=%2213.6%22 height=%222.7%22 rx=%221.35%22/><rect x=%2217.4%22 y=%2210.8%22 width=%2213.6%22 height=%222.7%22 rx=%221.35%22/></g></g></svg>" />
 
     <link rel="preload" href="../assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="../assets/fonts/plex-serif-600.woff2" as="font" type="font/woff2" crossorigin />
@@ -40,7 +42,29 @@
 
 <body>
     <header class="topbar">
-        <a class="brand" href="/"><span class="sharp">Sharp</span>Astro</a>
+        <a class="brand" href="/"><svg class="mark" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true" focusable="false">
+                <defs>
+                    <linearGradient id="umbra" x1="0.15" y1="0.15" x2="0.85" y2="0.95">
+                        <stop offset="0" stop-color="#ffc98a" />
+                        <stop offset="0.45" stop-color="#d4552a" />
+                        <stop offset="1" stop-color="#5c1409" />
+                    </linearGradient>
+                    <mask id="bite">
+                        <rect width="32" height="32" fill="#fff" />
+                        <circle cx="24.5" cy="8" r="10.4" fill="#000" />
+                    </mask>
+                </defs>
+                <circle cx="14.6" cy="17.4" r="12.2" fill="url(#umbra)" mask="url(#bite)" />
+                <g class="mark-sharp">
+                    <rect x="20.4" y="1.6" width="1.6" height="14.6" rx="0.8" />
+                    <rect x="26.4" y="1.6" width="1.6" height="14.6" rx="0.8" />
+                    <g transform="rotate(-12 24.2 8.9)">
+                        <rect x="17.4" y="5.2" width="13.6" height="2.7" rx="1.35" />
+                        <rect x="17.4" y="10.8" width="13.6" height="2.7" rx="1.35" />
+                    </g>
+                </g>
+            </svg>
+            <span class="wordmark"><span class="sharp">Sharp</span>Astro</span></a>
         <nav>
             <a href="/#viewer" data-optional>The&nbsp;viewer</a>
             <a href="/#ecosystem">Ecosystem</a>

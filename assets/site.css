@@ -211,6 +211,9 @@ code, .mono { font-family: "Plex Mono", ui-monospace, SFMono-Regular, Menlo, mon
 }
 
 .topbar .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: "Plex Serif", Georgia, serif;
     font-weight: 600;
     font-size: var(--t-1);
@@ -219,6 +222,12 @@ code, .mono { font-family: "Plex Mono", ui-monospace, SFMono-Regular, Menlo, mon
 }
 
 .topbar .brand .sharp { color: var(--teal); }
+
+/* The mark carries its own copper, because a total eclipse is the same colour on either ground.
+   The sharp is the half that has to follow the theme, so CSS owns that one: the dark theme's mint
+   is unreadable on a white header, and the light theme's darker teal disappears on the dark one. */
+.topbar .brand .mark { flex: none; }
+.topbar .brand .mark-sharp { fill: var(--teal); }
 
 .topbar nav {
     margin-inline-start: auto;
