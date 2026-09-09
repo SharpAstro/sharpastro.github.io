@@ -543,18 +543,26 @@ footer {
     justify-content: space-between;
 }
 
-/* The two donation buttons share a line and centre against each other. They are different heights
-   (the Buy Me a Coffee image is 40px, GitHub's Sponsors iframe 32px), so the footer's baseline
-   alignment would otherwise step them. The iframe's chrome is stripped here rather than inline,
-   because GitHub's embed snippet ships a style attribute and nothing else on this page has one. */
+/* The repo link and the two donation buttons share one row and centre against each other. All
+   three are different heights (a line of text, a 40px image, a 32px iframe), so the footer grid's
+   baseline alignment stepped them; and nothing here may shrink, or the row folds into a stack as
+   soon as the licence sentence competes for the width. The iframe's chrome is stripped here rather
+   than inline, because GitHub's embed snippet ships a style attribute and nothing else on this
+   page has one. */
 .support-links {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
     flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
 }
 
+.support-links a { flex: none; }
+
+/* Kills the descender gap under an inline image, which reads as the button sitting low. */
+.support-links img { display: block; }
+
 .support-links iframe {
+    flex: none;
     border: 0;
     border-radius: 6px;
     color-scheme: light;
