@@ -543,6 +543,23 @@ footer {
     justify-content: space-between;
 }
 
+/* The two donation buttons share a line and centre against each other. They are different heights
+   (the Buy Me a Coffee image is 40px, GitHub's Sponsors iframe 32px), so the footer's baseline
+   alignment would otherwise step them. The iframe's chrome is stripped here rather than inline,
+   because GitHub's embed snippet ships a style attribute and nothing else on this page has one. */
+.support-links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.support-links iframe {
+    border: 0;
+    border-radius: 6px;
+    color-scheme: light;
+}
+
 footer a { color: var(--dim); text-decoration-color: var(--line-strong); }
 footer a:hover { color: var(--text); }
 
