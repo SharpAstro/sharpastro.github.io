@@ -182,9 +182,11 @@
                 </p>
                 <p>
                     Three panels toggle independently: <kbd>L</kbd> the file list, <kbd>I</kbd> the info
-                    panel on the right (metadata, per-channel statistics, white-balance sliders and the
-                    cursor read-out), and <kbd>V</kbd> the histogram, with <kbd>Shift+V</kbd>
-                    switching it to a log scale. <kbd>F11</kbd> is fullscreen and <kbd>Esc</kbd> quits.
+                    panel on the right (metadata, per-channel statistics and the cursor read-out), and
+                    <kbd>V</kbd> the histogram, with <kbd>Shift+V</kbd> switching it to a log scale. The
+                    white balance has its own panel under <kbd>W</kbd> rather than standing open in the
+                    info panel. <kbd>F11</kbd> is fullscreen, and <kbd>Esc</kbd> closes whatever is open
+                    &mdash; a panel, then a selection &mdash; before it quits.
                 </p>
 
                 <h2 id="stretch">Making the image visible</h2>
@@ -223,20 +225,37 @@
                     frame you are scrubbing looks like the master the planetary stacker will build from
                     it. A mono or already-colour frame is left alone.
                 </p>
+                <p>
+                    <kbd>Shift+C</kbd> crops a stacked master to the area every frame actually covered,
+                    taking off the ragged, under-exposed border a stack leaves where only some of the
+                    subs reached. Where the stack wrote a coverage map the answer is exact; otherwise the
+                    edge is measured. The crop is not just a view: the plate solution, a saved file, the
+                    A/B comparison and the AI enhancement all see the cropped frame, which matters most
+                    for the enhancement, since the border is exact zero and a neural network reads that
+                    as structure. Press it again to see the whole frame.
+                </p>
 
                 <h2 id="colour">Colour</h2>
                 <p>
-                    <kbd>W</kbd> runs a photometric colour calibration and toggles whether it is applied.
-                    Rather than guessing from the image's own average, it matches the stars in the frame
-                    against a catalogue and solves the channel ratios that make stellar colours come out
-                    right. Hovering the button afterwards reports exactly what it measured &mdash; the
-                    correction triple, how many stars survived the fit, and the white reference &mdash;
-                    so the result is checkable rather than a black box.
+                    <kbd>W</kbd> opens the white balance panel, which holds everything colour in one
+                    place: three sliders, an <strong>Auto</strong> grey-world guess, a <strong>Reset</strong>,
+                    and the colour calibration itself. The sliders show the <em>effective</em> balance
+                    &mdash; the calibration composed with your own fine-tune, which is exactly what the
+                    screen is being multiplied by &mdash; so the panel never reads neutral over an image
+                    that visibly is not.
                 </p>
                 <p>
-                    <kbd>N</kbd> neutralises the background separately, and the three sliders in the info
-                    panel are a manual white balance layered on top of whichever calibration is active.
-                    Turning the calibration off restores the balance you had before it ran.
+                    With a calibration in force the panel also prints what it measured: the method it
+                    used, how many samples or stars survived, and the white reference where there is one.
+                    That line is the point &mdash; a triple like "R = 0.46" could have come from a
+                    careful fit or a crude guess, and only the provenance tells you which.
+                </p>
+                <p>
+                    <kbd>N</kbd> neutralises the background, and it is a <em>separate</em> step on
+                    purpose: a white balance is one multiplier per channel, which can only cancel a
+                    per-channel offset at a single brightness, so a sky with a gradient or a pedestal
+                    keeps its cast until this is applied on top. Turning the calibration off restores the
+                    balance you had before it ran.
                 </p>
                 <div class="callout limit">
                     <span class="label">Current limitation</span>
@@ -257,10 +276,28 @@
                 </p>
                 <p>
                     <kbd>P</kbd> plate-solves the frame. A solve is what turns pixel coordinates into sky
-                    coordinates, and it unlocks the rest: <kbd>G</kbd> draws a WCS coordinate grid, and
-                    <kbd>O</kbd> labels the deep-sky objects the frame contains. The built-in solver
-                    needs no external program and no internet; if you have ASTAP or Astrometry.net
-                    installed it will use those as fallbacks.
+                    coordinates, and it unlocks everything below. The built-in solver needs no external
+                    program and no internet; if you have ASTAP or Astrometry.net installed it will use
+                    those as fallbacks.
+                </p>
+                <p>
+                    <kbd>O</kbd> then steps through three levels of context rather than toggling one:
+                    first a WCS coordinate grid, then the deep-sky objects the frame contains, then the
+                    <strong>sky itself drawn behind your photograph</strong> &mdash; the same star field,
+                    constellation figures and catalogue the browser sky atlas shows, aligned to your
+                    plate solve and sitting exactly where your frame sits on the sky. <kbd>Shift+O</kbd>
+                    steps back down, and <kbd>G</kbd> still toggles the grid on its own. At the top level
+                    a small floating panel appears over the image with the map's ten layers on it; drag
+                    it to any edge, or double-click its grip to roll it up.
+                </p>
+                <p>
+                    <strong>Click any catalogued object to see what it is.</strong> A panel appears with
+                    its name, type and magnitude, and &mdash; where the frame records when and where it
+                    was taken &mdash; its altitude and rise, transit and set times <em>at the moment of
+                    the exposure</em>, not at the moment you happen to be looking. The ring drawn round
+                    the selection traces the object's own shape where the catalogue knows one, so an
+                    inclined galaxy rings as the tilted disc it is rather than as a circle.
+                    <kbd>Esc</kbd> clears the selection.
                 </p>
                 <p>
                     With the pointer over the image, the info panel's cursor block shows the pixel
@@ -394,7 +431,7 @@
                         <tr><td><kbd>I</kbd></td><td>Info panel</td></tr>
                         <tr><td><kbd>V</kbd> / <kbd>Shift+V</kbd></td><td>Histogram / log scale</td></tr>
                         <tr><td><kbd>F11</kbd></td><td>Fullscreen</td></tr>
-                        <tr><td><kbd>Esc</kbd></td><td>Quit</td></tr>
+                        <tr><td><kbd>Esc</kbd></td><td>Clear the selection, else quit</td></tr>
                     </tbody>
                 </table>
 
@@ -407,8 +444,9 @@
                         <tr><td><kbd>H</kbd></td><td>HDR highlight compression</td></tr>
                         <tr><td><kbd>C</kbd></td><td>Channel view (RGB or one channel)</td></tr>
                         <tr><td><kbd>D</kbd></td><td>Demosaic algorithm</td></tr>
-                        <tr><td><kbd>W</kbd></td><td>Photometric colour calibration on / off</td></tr>
+                        <tr><td><kbd>W</kbd></td><td>White balance panel: sliders, colour calibration, reset</td></tr>
                         <tr><td><kbd>N</kbd></td><td>Neutralise the background</td></tr>
+                        <tr><td><kbd>Shift+C</kbd></td><td>Crop to the area every sub covered / show all</td></tr>
                     </tbody>
                 </table>
 
@@ -418,8 +456,9 @@
                         <tr><td><kbd>S</kbd></td><td>Detect stars, show HFD / FWHM</td></tr>
                         <tr><td><kbd>P</kbd></td><td>Plate solve this frame</td></tr>
                         <tr><td><kbd>G</kbd></td><td>WCS coordinate grid</td></tr>
-                        <tr><td><kbd>O</kbd></td><td>Deep-sky object overlays</td></tr>
+                        <tr><td><kbd>O</kbd> / <kbd>Shift+O</kbd></td><td>Context: grid, then catalogue objects, then the sky behind the frame</td></tr>
                         <tr><td><kbd>E</kbd></td><td>AI enhance (right-click the button to change backend)</td></tr>
+                        <tr><td>Click</td><td>Select the catalogued object under the pointer</td></tr>
                         <tr><td>Right-click</td><td>Copy RA/Dec, pixel value, position, or a sky-atlas link</td></tr>
                     </tbody>
                 </table>
