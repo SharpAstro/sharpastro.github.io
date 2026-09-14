@@ -331,15 +331,16 @@
                     Each frame you click or step to gets <strong>its own auto-stretch</strong>, as it does
                     in N.I.N.A. and PixInsight: a click in the list means "show me this frame". Comparing
                     subs is different, and fails for a reason that is not obvious: with a fresh stretch per
-                    frame, a genuine brightness difference is hidden by the display adapting to it. So a
-                    <strong>blink holds the display mapping</strong> across frames of the same shape
-                    &mdash; the second frame is shown with the first frame's stretch, and what you see
-                    differing is the data. <kbd>Shift+H</kbd> takes the same hold by hand, for stepping
-                    through frames with the arrow keys.
+                    frame, a genuine brightness difference is hidden by the display adapting to it. So
+                    <kbd>Ctrl+H</kbd> <strong>holds the display mapping</strong> across frames of the
+                    same shape &mdash; every frame is shown with the held frame's stretch, and what you
+                    see differing is the data. A blink is the viewer clicking for you and carries no more
+                    than a click does; hold first if you want the comparison. The colour calibration is
+                    shared across the run either way, so a click never costs a second SPCC fit.
                 </p>
                 <p>
                     The status bar says <code>Held to &lt;file&gt;</code> whenever that is happening, and
-                    <kbd>Shift+H</kbd> releases or re-takes the hold. A hold is honest to the pixels: a
+                    <kbd>Ctrl+H</kbd> releases or re-takes the hold. A hold is honest to the pixels: a
                     sub whose sky is darker than the held frame's renders darker all over, target
                     included, so release it when you are looking at one frame rather than comparing two.
                     <kbd>Ctrl+Space</kbd> jumps back to the held frame.
@@ -480,7 +481,7 @@
                 <table>
                     <tbody>
                         <tr><td><kbd>A</kbd> / <kbd>Shift+A</kbd></td><td>Before / after split; re-pin</td></tr>
-                        <tr><td><kbd>Shift+H</kbd></td><td>Hold / release the display across frames</td></tr>
+                        <tr><td><kbd>Ctrl+H</kbd></td><td>Hold / release the display across frames</td></tr>
                         <tr><td><kbd>Space</kbd></td><td>Blink the file list forward (play / pause for a sequence)</td></tr>
                         <tr><td><kbd>Shift+Space</kbd></td><td>Blink backward</td></tr>
                         <tr><td><kbd>Ctrl+Space</kbd></td><td>Back to the frame the display is held to</td></tr>
