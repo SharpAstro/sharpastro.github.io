@@ -328,15 +328,20 @@
                 </p>
                 <h3>Blink &mdash; two frames, one processing state</h3>
                 <p>
-                    Comparing subs by stepping between them normally fails for a reason that is not
-                    obvious: each frame gets its own auto-stretch, so a genuine brightness difference is
-                    hidden by the display adapting to it. The viewer therefore <strong>holds the display
-                    mapping across frames of the same shape</strong> by default &mdash; the second frame
-                    is shown with the first frame's stretch, so what you see differing is the data.
+                    Each frame you click or step to gets <strong>its own auto-stretch</strong>, as it does
+                    in N.I.N.A. and PixInsight: a click in the list means "show me this frame". Comparing
+                    subs is different, and fails for a reason that is not obvious: with a fresh stretch per
+                    frame, a genuine brightness difference is hidden by the display adapting to it. So a
+                    <strong>blink holds the display mapping</strong> across frames of the same shape
+                    &mdash; the second frame is shown with the first frame's stretch, and what you see
+                    differing is the data. <kbd>Shift+H</kbd> takes the same hold by hand, for stepping
+                    through frames with the arrow keys.
                 </p>
                 <p>
                     The status bar says <code>Held to &lt;file&gt;</code> whenever that is happening, and
-                    <kbd>Shift+H</kbd> releases or re-takes the hold.
+                    <kbd>Shift+H</kbd> releases or re-takes the hold. A hold is honest to the pixels: a
+                    sub whose sky is darker than the held frame's renders darker all over, target
+                    included, so release it when you are looking at one frame rather than comparing two.
                     <kbd>Ctrl+Space</kbd> jumps back to the held frame.
                     <kbd>Space</kbd> blinks forward through the file list and
                     <kbd>Shift+Space</kbd> backward; pressing the same direction again pauses,
@@ -425,6 +430,9 @@
                 <h3>View</h3>
                 <table>
                     <tbody>
+                        <tr><td><kbd>Ctrl+O</kbd></td><td>Open a file</td></tr>
+                        <tr><td><kbd>Ctrl+S</kbd></td><td>Save the image as displayed (clean, 16-bit PNG)</td></tr>
+                        <tr><td><kbd>Ctrl+Shift+S</kbd></td><td>Save menu: with overlays, PNG depth</td></tr>
                         <tr><td><kbd>Wheel</kbd> / <kbd>Ctrl+Wheel</kbd></td><td>Zoom</td></tr>
                         <tr><td><kbd>Ctrl</kbd>&nbsp;<kbd>+</kbd> / <kbd>Ctrl</kbd>&nbsp;<kbd>&minus;</kbd></td><td>Zoom in / out</td></tr>
                         <tr><td><kbd>F</kbd> / <kbd>Ctrl+0</kbd></td><td>Fit to window</td></tr>
