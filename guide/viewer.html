@@ -281,14 +281,18 @@
                     those as fallbacks.
                 </p>
                 <p>
-                    <kbd>O</kbd> then steps through three levels of context rather than toggling one:
-                    first a WCS coordinate grid, then the deep-sky objects the frame contains, then the
-                    <strong>sky itself drawn behind your photograph</strong> &mdash; the same star field,
-                    constellation figures and catalogue the browser sky atlas shows, aligned to your
-                    plate solve and sitting exactly where your frame sits on the sky. <kbd>Shift+O</kbd>
-                    steps back down, and <kbd>G</kbd> still toggles the grid on its own. At the top level
-                    a small floating panel appears over the image with the map's ten layers on it; drag
-                    it to any edge, or double-click its grip to roll it up.
+                    <kbd>O</kbd> then annotates the frame: a WCS coordinate grid and the deep-sky objects
+                    the frame contains, together in one press, and gone again on the next.
+                    <kbd>Shift+O</kbd> steps the two levels one at a time if you want the grid without the
+                    objects, and <kbd>G</kbd> toggles the grid on its own.
+                </p>
+                <p>
+                    <kbd>Y</kbd> puts the <strong>sky itself behind your photograph</strong> &mdash; the
+                    same star field, constellation figures and catalogue the browser sky atlas shows,
+                    aligned to your plate solve and sitting exactly where your frame sits on the sky. It
+                    needs a solved frame, and the toolbar button says so when there is not one yet. With
+                    the sky up, a small floating panel appears over the image with the map's ten layers on
+                    it; drag it to any edge, or double-click its grip to roll it up.
                 </p>
                 <p>
                     <strong>Click any catalogued object to see what it is.</strong> A panel appears with
@@ -456,7 +460,8 @@
                         <tr><td><kbd>S</kbd></td><td>Detect stars, show HFD / FWHM</td></tr>
                         <tr><td><kbd>P</kbd></td><td>Plate solve this frame</td></tr>
                         <tr><td><kbd>G</kbd></td><td>WCS coordinate grid</td></tr>
-                        <tr><td><kbd>O</kbd> / <kbd>Shift+O</kbd></td><td>Context: grid, then catalogue objects, then the sky behind the frame</td></tr>
+                        <tr><td><kbd>O</kbd></td><td>Annotate: grid + catalogue objects (<kbd>Shift+O</kbd> for the grid alone)</td></tr>
+                        <tr><td><kbd>Y</kbd></td><td>The sky behind the frame (needs a plate solve)</td></tr>
                         <tr><td><kbd>E</kbd></td><td>AI enhance (right-click the button to change backend)</td></tr>
                         <tr><td>Click</td><td>Select the catalogued object under the pointer</td></tr>
                         <tr><td>Right-click</td><td>Copy RA/Dec, pixel value, position, or a sky-atlas link</td></tr>
