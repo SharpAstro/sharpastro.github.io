@@ -83,10 +83,11 @@
                 <p class="eyebrow">Open source &middot; .NET&nbsp;10 &middot; Windows, Linux, macOS</p>
                 <h1>Software that runs the whole night.</h1>
                 <p class="lede">
-                    SharpAstro is an ecosystem of .NET libraries and applications for astrophotography &mdash;
-                    from <strong>talking to the mount and the camera</strong>, through an
-                    <strong>unattended imaging session</strong>, to <strong>stacking what came back</strong>.
-                    Built for real rigs, including the multi-telescope setups most software will not drive.
+                    SharpAstro is a set of open-source .NET libraries and applications for
+                    astrophotography. It covers the whole night: <strong>controlling the mount and
+                    camera</strong>, running an <strong>unattended imaging session</strong>, and
+                    <strong>stacking what comes back</strong>. It's built for real rigs, including the
+                    multi-telescope setups most software can't drive.
                 </p>
 
                 <div class="cta-row">
@@ -95,7 +96,7 @@
                 </div>
 
                 <p class="hero-meta">
-                    <span>19 libraries &amp; applications</span>
+                    <span>20 libraries &amp; applications</span>
                     <span>Native AOT binaries</span>
                     <span>AGPL-3.0 &amp; MIT</span>
                     <span>No vendor lock-in</span>
@@ -109,9 +110,9 @@
                     <p class="eyebrow">What it does</p>
                     <h2>A night, end to end</h2>
                     <p>
-                        Every screenshot below is the real application: the session tabs driven against
-                        simulated hardware, so the whole run is reproducible, and the viewer on a real
-                        stack.
+                        Every screenshot below is the real application. The session tabs were captured
+                        against simulated hardware, so anyone can reproduce the run, and the viewer is
+                        showing a real stack.
                     </p>
                 </div>
 
@@ -122,19 +123,21 @@
                             <p class="eyebrow">Automation</p>
                             <h3>Point it at the sky and go to bed</h3>
                             <p>
-                                Cool the camera to setpoint, find focus, calibrate the guider, slew, centre on a
-                                plate solve, dither, flip the meridian, refocus when the stars start to bloat,
-                                shoot flats at dawn, and park. One mount, as many optical trains as it carries.
+                                It cools the camera, finds focus, calibrates the guider, slews and
+                                centres on a plate solve, dithers, handles the meridian flip, refocuses
+                                when the stars start to bloat, shoots flats at dawn, and parks. It
+                                drives one mount and every optical train on it.
                             </p>
                             <p class="detail">
-                                Refocus triggers on a <em>trend</em> across the last 30 frames, not one bad
-                                exposure &mdash; a gust or passing haze cannot start a focus run. Backlash is
-                                inferred from every successful autofocus rather than measured separately.
+                                Refocusing is triggered by a <em>trend</em> over the last 30 frames
+                                rather than one bad exposure, so a gust of wind or passing haze won't
+                                start a focus run. Focuser backlash is worked out from every successful
+                                autofocus, so you never have to measure it separately.
                             </p>
                         </div>
                         <figure>
                             <div class="shot"><img src="assets/img/live-session.webp" width="1800" height="1160" alt="The Live Session tab during an imaging run, showing the current frame, the session phase, and per-frame guiding statistics." loading="lazy" /></div>
-                            <figcaption>Live Session &mdash; a run in progress, with the frame just written and the guiding trace beside it.</figcaption>
+                            <figcaption>Live Session: a run in progress, showing the latest frame with the guiding trace beside it.</figcaption>
                         </figure>
                     </article>
 
@@ -143,20 +146,21 @@
                             <p class="eyebrow">Planning</p>
                             <h3>Decide what is actually worth shooting</h3>
                             <p>
-                                The scheduler scores catalogued targets for tonight against altitude, the moon,
-                                and your own horizon obstructions, then hands each one the slice of the night
-                                where it sits highest.
+                                The scheduler ranks tonight's targets by altitude, the moon, and
+                                whatever blocks your own horizon, then gives each one the part of the
+                                night when it's highest.
                             </p>
                             <p>
-                                Targets that fit a single pointing are co-framed automatically &mdash; pin the
-                                Lagoon with a wide enough sensor and the Trifid comes along in the same frame.
-                                Comets are computed locally from JPL orbital elements, so their positions and
-                                brightness are live rather than a stale list.
+                                Targets that fit in one field of view are framed together automatically.
+                                Pin the Lagoon with a wide enough sensor and the Trifid comes along for
+                                free. Comet positions and brightness are calculated locally from JPL
+                                orbital elements, so they're always current instead of coming from a
+                                list that has gone stale.
                             </p>
                         </div>
                         <figure>
                             <div class="shot"><img src="assets/img/planner.webp" width="1800" height="1160" alt="The Planner tab showing tonight's candidate targets, with altitude curves for two pinned objects plotted against the twilight bands and an hourly cloud forecast." loading="lazy" /></div>
-                            <figcaption>Planner &mdash; two pinned targets scored and scheduled across the dark window, with the hourly forecast above.</figcaption>
+                            <figcaption>Planner: two pinned targets scheduled across tonight's dark hours, with the hourly forecast above.</figcaption>
                         </figure>
                     </article>
 
@@ -165,19 +169,20 @@
                             <p class="eyebrow">Finding</p>
                             <h3>Know where you are pointing</h3>
                             <p>
-                                A GPU sky atlas over the full Tycho-2 catalogue, with constellation figures and
-                                boundaries, deep-sky overlays, live planet and comet positions, and the mount's
-                                own reticle drawn where it currently sits.
+                                A GPU-rendered sky atlas of the full Tycho-2 catalogue, with
+                                constellation figures and boundaries, deep-sky overlays, live planet and
+                                comet positions, and a reticle showing where the mount is pointing right
+                                now.
                             </p>
                             <p>
-                                Plate solving runs against the same catalogue with no external dependency, so a
-                                frame can be solved and the mount synced without installing anything else.
-                                ASTAP and astrometry.net are supported as alternatives.
+                                The plate solver uses the same catalogue and needs nothing else
+                                installed, so you can solve a frame and sync the mount out of the box.
+                                ASTAP and astrometry.net work too, if you prefer them.
                             </p>
                         </div>
                         <figure>
                             <div class="shot"><img src="assets/img/sky-atlas.webp" width="1800" height="1160" alt="The Sky Map tab showing the Milky Way through Sagittarius and Scorpius with constellation figures, boundaries, the ecliptic, the zenith marker and the mount's own reticle." loading="lazy" /></div>
-                            <figcaption>Sky Map &mdash; the full Tycho-2 catalogue on the GPU, with the pinned target circled and the mount's reticle drawn where it is actually pointing.</figcaption>
+                            <figcaption>Sky Map: the full Tycho-2 catalogue on the GPU, with the pinned target circled and the mount's reticle showing where it's actually pointing.</figcaption>
                         </figure>
                     </article>
 
@@ -186,19 +191,21 @@
                             <p class="eyebrow">Guiding</p>
                             <h3>Keep the stars round for eight hours</h3>
                             <p>
-                                A built-in guider that calibrates itself, guides on a selected star, and dithers
-                                between sub-exposures &mdash; or PHD2, if that is what you already trust.
+                                The built-in guider calibrates itself, guides on the star you pick, and
+                                dithers between sub-exposures. If you already trust PHD2, use that
+                                instead.
                             </p>
                             <p class="detail">
-                                Calibration deliberately runs half an hour <em>east</em> of the meridian, so a
-                                German equatorial stays on one side of the pier throughout and the declination
-                                sense it learns matches the side it will image on. Calibrating west of the
-                                meridian is how a mount teaches itself to run away in Dec.
+                                Calibration runs half an hour <em>east</em> of the meridian on purpose.
+                                That keeps a German equatorial mount on one side of the pier the whole
+                                time, so the declination direction it learns matches the side it will
+                                image on. Calibrating west of the meridian is how a mount ends up
+                                running away in Dec.
                             </p>
                         </div>
                         <figure>
                             <div class="shot"><img src="assets/img/guider.webp" width="1800" height="1160" alt="The Guider tab showing the guide star with its right ascension and declination vectors, a star profile, guide statistics, a scatter plot, and the guiding trace with a dither step." loading="lazy" /></div>
-                            <figcaption>Guider &mdash; 0.28&Prime; total RMS on the simulated mount, with the step in the trace where a dither landed.</figcaption>
+                            <figcaption>Guider: 0.28&Prime; total RMS on the simulated mount. The step in the trace is where a dither landed.</figcaption>
                         </figure>
                     </article>
 
@@ -207,19 +214,20 @@
                             <p class="eyebrow">Hardware</p>
                             <h3>Talk to the gear you already own</h3>
                             <p>
-                                ASCOM on Windows, Alpaca over HTTP anywhere, native ZWO and QHYCCD SDKs, serial
-                                mounts including Meade LX200, SkyWatcher, OnStep and iOptron, and Canon bodies
-                                over PTP with no vendor SDK installed at all.
+                                ASCOM on Windows, Alpaca over the network on any platform, the native
+                                ZWO and QHYCCD SDKs, serial mounts such as Meade LX200, SkyWatcher,
+                                OnStep and iOptron, and Canon bodies over PTP without installing any
+                                Canon software.
                             </p>
                             <p class="detail">
-                                Devices are addressed by URI, so a driver is a string in a profile rather than a
-                                compile-time choice, and a headless Raspberry Pi runs the same code as a Windows
-                                desktop.
+                                Each device is identified by a URI, so switching drivers means editing a
+                                profile, not rebuilding anything. A headless Raspberry Pi runs exactly
+                                the same code as a Windows desktop.
                             </p>
                         </div>
                         <figure class="figure-narrow">
                             <div class="shot"><img src="assets/img/equipment.webp" width="760" height="928" alt="The Equipment tab showing a profile with a mount, guider, guide camera, weather source, and one optical train with its camera and focuser assigned." loading="lazy" /></div>
-                            <figcaption>Equipment &mdash; one profile, one mount, and an optical train per telescope on the saddle.</figcaption>
+                            <figcaption>Equipment: one profile, one mount, and an optical train for each telescope on the saddle.</figcaption>
                         </figure>
                     </article>
 
@@ -228,13 +236,14 @@
                             <p class="eyebrow">Remote</p>
                             <h3>Watch it from somewhere warm</h3>
                             <p>
-                                A headless server exposes the session over REST and WebSocket, and serves the
-                                same hardware over the ASCOM Alpaca protocol, so other software can drive it too.
+                                Run it headless and the session is available over REST and WebSocket.
+                                The same hardware is also served over ASCOM Alpaca, so other software
+                                can drive it too.
                             </p>
                             <p>
-                                A desktop can bind another node and mirror its run through the same tabs that
-                                render a local one. Selecting a rig changes what you are looking at &mdash; never
-                                what your own machine owns.
+                                From a desktop you can connect to another machine and follow its run in
+                                the same tabs you'd use locally. Switching to another rig changes what
+                                you're looking at, not what your own machine is controlling.
                             </p>
                         </div>
                         <figure>
@@ -246,7 +255,7 @@
 <span class="c"># the same hardware, spoken to as ASCOM Alpaca by anything else on the network</span>
 <span class="p">$</span> curl -s localhost:1888/api/v1/telescope/0/rightascension
 <span class="o">{"Value":22.518,"ErrorNumber":0,"ErrorMessage":""}</span></code></pre>
-                            <figcaption>The headless node answers on both planes at once: the native session API, and the Alpaca device API other software already speaks.</figcaption>
+                            <figcaption>One headless node, two APIs: its own session API, and the Alpaca device API that other astronomy software already speaks.</figcaption>
                         </figure>
                     </article>
 
@@ -255,35 +264,36 @@
                             <p class="eyebrow">Inspecting</p>
                             <h3>Look at what came back</h3>
                             <p>
-                                <strong>Astro Photo Viewer</strong> is a second application, shipped on its
-                                own through the Microsoft Store: the suite's viewer, without the suite. It
-                                opens FITS, SER planetary video, TIFF and Canon CR2/CR3, stretches and
-                                demosaics on the GPU, measures every star it finds, and draws a WCS grid with
-                                catalogue annotations over a plate-solved frame.
+                                <strong>Astro Photo Viewer</strong> is the suite's image viewer as a
+                                standalone app, available from the Microsoft Store. It opens FITS, SER
+                                planetary video, TIFF and Canon CR2/CR3 files, stretches and debayers
+                                them on the GPU, measures every star it finds, and overlays a coordinate
+                                grid and catalogue labels on a plate-solved frame.
                             </p>
                             <p>
-                                A SER switches to frame playback, and a RAW/STACK toggle runs a rolling
-                                lucky-imaging stack that follows the playhead, with six wavelet-sharpen
-                                sliders over it. All of it off the render thread, so the sliders stay instant
-                                however long a stack takes.
+                                SER files open in playback mode. A RAW/STACK toggle switches to a
+                                rolling lucky-imaging stack that follows the playhead, with six wavelet
+                                sharpening sliders on top. Stacking runs in the background, so the
+                                sliders stay responsive however long a stack takes.
                             </p>
                             <div class="cta-row">
                                 <a class="btn btn-ghost" href="https://apps.microsoft.com/detail/9pmdzp16tgbg">Get it from the Microsoft Store &rarr;</a>
                                 <a class="btn btn-ghost" href="guide/viewer.html">User guide &rarr;</a>
                             </div>
                             <p class="detail">
-                                Windows&nbsp;10 version&nbsp;2004 or newer, x64 and ARM64, updating itself
-                                from the Store. Double-clicking a <code>.fits</code>, <code>.fit</code>,
-                                <code>.fts</code>, <code>.fz</code> or <code>.ser</code> opens that file in
-                                the window already showing its folder rather than starting another copy.
-                                Linux and macOS run the same viewer from a self-contained native AOT archive
-                                on <a href="https://github.com/SharpAstro/tianwen/releases">GitHub
+                                Needs Windows&nbsp;10 version&nbsp;2004 or newer, on x64 or ARM64, and
+                                updates itself through the Store. Double-clicking a <code>.fits</code>,
+                                <code>.fit</code>, <code>.fts</code>, <code>.fz</code> or
+                                <code>.ser</code> file opens it in the window that's already showing its
+                                folder, instead of starting another copy. On Linux and macOS, the same
+                                viewer is a self-contained native download on <a
+                                href="https://github.com/SharpAstro/tianwen/releases">GitHub
                                 Releases</a>.
                             </p>
                         </div>
                         <figure>
                             <div class="shot"><img src="assets/img/viewer.webp" width="1800" height="1155" alt="Astro Photo Viewer showing a colour FITS of the Lagoon and Trifid nebulae: the file list at left, an A/B split down the middle between a pinned stretch and the live one, and metadata, per-channel statistics, white-balance sliders and a cursor read-out at right." loading="lazy" /></div>
-                            <figcaption>Astro Photo Viewer &mdash; the same screenshot the Store listing carries. An OIII/HOO stack of the Sagittarius triplet, plate-solved at 5.98&Prime;/px with 11,628 stars measured, the A/B split holding a pinned processing state against the live one.</figcaption>
+                            <figcaption>Astro Photo Viewer, as shown on its Store listing: an OIII/HOO stack of the Sagittarius triplet, plate-solved at 5.98&Prime;/px with 11,628 stars measured. The A/B split compares a pinned processing state with the live one.</figcaption>
                         </figure>
                     </article>
 
@@ -297,14 +307,13 @@
                     <p class="eyebrow">Live demo</p>
                     <h2>The atlas runs in your browser</h2>
                     <p>
-                        No install and no account: the planner and the sky atlas are compiled to WebAssembly and
-                        served as a static site.
+                        Nothing to install and no account needed. The planner and sky atlas are compiled
+                        to WebAssembly and run straight from a static site.
                     </p>
                     <p>
-                        Every tab in the desktop application is generic over the surface it draws on, so the same
-                        code that renders through Vulkan on a desktop renders through WebGL in a tab. It is the
-                        same scheduler, the same catalogue, and the same projection maths &mdash; not a
-                        reimplementation.
+                        The desktop app's tabs don't care what they draw on, so the code that renders
+                        through Vulkan on your desktop renders through WebGL in a browser tab. Same
+                        scheduler, same catalogue, same projection maths. It isn't a port.
                     </p>
                     <div class="cta-row">
                         <a class="btn btn-primary" href="/tianwen/">Open the live app &rarr;</a>
@@ -322,11 +331,11 @@
             <div class="wrap">
                 <div class="section-head">
                     <p class="eyebrow">The ecosystem</p>
-                    <h2>Nineteen pieces, each usable on its own</h2>
+                    <h2>Twenty pieces, each usable on its own</h2>
                     <p>
-                        The astrophotography stack sits on top of general-purpose libraries that were written to
-                        support it and are independently useful. All pure-managed and AOT-friendly unless they
-                        wrap a vendor's native SDK.
+                        The astrophotography stack is built on general-purpose libraries that were
+                        written for it but are useful on their own. Everything is pure managed code and
+                        AOT-friendly, except where it wraps a vendor's native SDK.
                     </p>
                 </div>
 
@@ -337,7 +346,7 @@
                         <ul class="cat-list">
                             <li><a href="https://github.com/SharpAstro/tianwen">
                                 <span class="cat-name">tianwen</span>
-                                <span class="cat-desc">The imaging suite itself (天文). Device management, session automation, FITS I/O, star detection and plate solving. Ships as a NuGet library, a CLI with a terminal UI, a headless REST server, a FITS viewer and an integrated GUI.<span class="cat-flag">AGPL-3.0</span></span>
+                                <span class="cat-desc">The imaging suite itself (天文): device management, session automation, FITS I/O, star detection and plate solving. Available as a NuGet library, a CLI with a terminal UI, a headless REST server, a FITS viewer and a full desktop GUI.<span class="cat-flag">AGPL-3.0</span></span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/TianWen.DAL">
                                 <span class="cat-name">TianWen.DAL</span>
@@ -355,7 +364,7 @@
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/QHYCCD.SDK">
                                 <span class="cat-name">QHYCCD.SDK</span>
-                                <span class="cat-desc">QHYCCD native SDK wrapper for .NET.</span>
+                                <span class="cat-desc">A .NET wrapper for the QHYCCD native SDK.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/Canon.EDSDK">
                                 <span class="cat-name">Canon.EDSDK</span>
@@ -363,7 +372,7 @@
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/FC.SDK">
                                 <span class="cat-name">FC.SDK</span>
-                                <span class="cat-desc">"Free Canon SDK" &mdash; Canon EOS control over PTP via USB and Wi-Fi in pure managed C#, with no Canon binary required. The option for platforms Canon does not ship for.</span>
+                                <span class="cat-desc">The "Free Canon SDK": controls Canon EOS cameras over PTP via USB or Wi-Fi in pure managed C#, with no Canon binaries needed. Handy on platforms Canon doesn't support.</span>
                             </a></li>
                         </ul>
                     </div>
@@ -373,15 +382,15 @@
                         <ul class="cat-list">
                             <li><a href="https://github.com/SharpAstro/FITS.Lib">
                                 <span class="cat-name">FITS.Lib</span>
-                                <span class="cat-desc">FITS reader and writer, with a large speed-up for writing the big multi-dimensional integer arrays astronomical imaging actually produces.</span>
+                                <span class="cat-desc">A FITS reader and writer that's much faster at writing the large multi-dimensional integer arrays astronomical imaging actually produces.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/SER.Lib">
                                 <span class="cat-name">SER.Lib</span>
-                                <span class="cat-desc">The SER planetary video format, memory-mapped with frame-accurate random access even in multi-gigabyte captures.</span>
+                                <span class="cat-desc">SER planetary video, memory-mapped, with fast access to any frame even in multi-gigabyte captures.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/Codecs">
                                 <span class="cat-name">Codecs</span>
-                                <span class="cat-desc">A family of pure-managed image codecs (TIFF, PNG, JPEG, JPEG&nbsp;XR, OpenEXR, ICC) behind a facade that sniffs magic bytes and dispatches.</span>
+                                <span class="cat-desc">Pure managed image codecs (TIFF, PNG, JPEG, JPEG&nbsp;XR, OpenEXR, ICC) behind a single entry point that detects the format from the file itself.</span>
                             </a></li>
                         </ul>
                     </div>
@@ -395,19 +404,19 @@
                         <ul class="cat-list">
                             <li><a href="https://github.com/SharpAstro/DIR.Lib">
                                 <span class="cat-name">DIR.Lib</span>
-                                <span class="cat-desc">Device-independent input, rendering and layout &mdash; the declarative layout engine and widget model shared by the GPU and terminal front ends.</span>
+                                <span class="cat-desc">Device-independent input, rendering and layout: the declarative layout engine and widgets shared by the GPU and terminal front ends.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/SdlVulkan.Renderer">
                                 <span class="cat-name">SdlVulkan.Renderer</span>
-                                <span class="cat-desc">An SDL3 + Vulkan rendering surface over those primitives.</span>
+                                <span class="cat-desc">Renders DIR.Lib on the desktop through SDL3 and Vulkan.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/WebGl.Renderer">
                                 <span class="cat-name">WebGl.Renderer</span>
-                                <span class="cat-desc">The same surface for Blazor WebAssembly and WebGL2 &mdash; what draws the live demo above.</span>
+                                <span class="cat-desc">Renders DIR.Lib in the browser through Blazor WebAssembly and WebGL2. It draws the live demo above.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/Console.Lib">
                                 <span class="cat-name">Console.Lib</span>
-                                <span class="cat-desc">Terminal applications: dock layouts, widgets, mouse and keyboard input, a diffing cell buffer, and Sixel graphics. Also ships <code>mdcat</code>, a cat-for-Markdown.</span>
+                                <span class="cat-desc">Terminal applications: dock layouts, widgets, mouse and keyboard input, a diffing cell buffer, and Sixel graphics. Also includes <code>mdcat</code>, which is <code>cat</code> for Markdown.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/Fonts.Lib">
                                 <span class="cat-name">Fonts.Lib</span>
@@ -419,7 +428,11 @@
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/LAN.Lib">
                                 <span class="cat-name">LAN.Lib</span>
-                                <span class="cat-desc">Local-network discovery and peer tracking &mdash; how a node finds the other rigs on the network.</span>
+                                <span class="cat-desc">Local-network discovery and peer tracking, which is how a node finds the other rigs on the network.</span>
+                            </a></li>
+                            <li><a href="https://github.com/SharpAstro/Serial.Lib">
+                                <span class="cat-name">Serial.Lib</span>
+                                <span class="cat-desc">Serial port I/O that reads and writes reliably, even on the cheap USB adapters where <code>System.IO.Ports</code> doesn't. Reads and writes can be cancelled and never hang past their deadline, failures come back as specific errors, and ports are listed with a hardware identity that stays the same between runs. It's what TianWen uses to talk to mounts and focusers.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/LALR.CC">
                                 <span class="cat-name">LALR.CC</span>
@@ -433,11 +446,11 @@
                         <ul class="cat-list">
                             <li><a href="https://github.com/SharpAstro/openphd2-multiscope">
                                 <span class="cat-name">openphd2-multiscope</span>
-                                <span class="cat-desc">A multiplexing proxy for PHD2's JSON-RPC API, so several telescopes dither in step.</span>
+                                <span class="cat-desc">A multiplexing proxy for PHD2's JSON-RPC API that keeps several telescopes dithering in step.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/usbreset">
                                 <span class="cat-name">usbreset</span>
-                                <span class="cat-desc">Resets a wedged USB device without a physical replug &mdash; for the camera that stops answering at 3am.</span>
+                                <span class="cat-desc">Resets a stuck USB device without unplugging it. For when the camera stops responding at 3am.</span>
                             </a></li>
                         </ul>
                     </div>

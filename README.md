@@ -23,7 +23,7 @@ which is what renders on the organisation's GitHub profile. The two are **mainta
 deliberate choice, so this page can say things the profile README should not. When a library is
 added or renamed, update both.
 
-Both currently list the same 19 repositories; the site adds the Store link and the screenshots on
+Both currently list the same 20 repositories; the site adds the Store link and the screenshots on
 top of that.
 
 ## The Microsoft Store link
