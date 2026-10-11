@@ -111,20 +111,21 @@
                 <h2 id="install">Installing</h2>
                 <p>
                     On Windows, install it from the Microsoft Store. It updates itself from there, and
-                    the Store build registers the file associations for you &mdash; you still have to
-                    pick it as the default application for a file type in Windows Settings, which is
-                    Windows' choice to make, not the app's.
+                    the Store build registers the file associations for you. To make it the default
+                    application for a file type, pick it in Windows Settings.
                 </p>
                 <div class="cta-row">
                     <a class="btn btn-ghost" href="https://apps.microsoft.com/detail/9pmdzp16tgbg">Get it from the Microsoft Store &rarr;</a>
                 </div>
                 <p class="detail">
-                    Windows&nbsp;10 version&nbsp;2004 or newer, x64 and ARM64. Linux and macOS run the
-                    same viewer from a self-contained archive on
-                    <a href="https://github.com/SharpAstro/tianwen/releases">GitHub Releases</a> &mdash;
-                    no runtime to install, and no installer either: unpack it and run
-                    <code>tianwen-fits</code>. An unpackaged install can register its own file
-                    associations with <code>tianwen-fits --register</code>.
+                    Windows&nbsp;10 version&nbsp;2004 or newer, x64 and ARM64. Linux and macOS builds
+                    are on <a href="https://github.com/SharpAstro/tianwen/releases">GitHub Releases</a>.
+                    On macOS, open the <code>.dmg</code>. On Linux, unpack the self-contained archive
+                    and run <code>tianwen-fits</code>; there is no runtime to install. An unpackaged
+                    Windows or Linux install can register the FITS file types with
+                    <code>tianwen-fits --register</code>, and SER with
+                    <code>tianwen-fits --register SER</code>. On macOS, set the default app in
+                    Finder with Get Info &rarr; Open With.
                 </p>
 
                 <h2 id="opening">Opening images</h2>
@@ -151,12 +152,12 @@
                         </tr>
                         <tr>
                             <td><code>.ser</code></td>
-                            <td>Planetary video. Opens in playback mode &mdash; see <a href="#planetary">Planetary video</a>.</td>
+                            <td>Planetary video. Opens in playback mode; see <a href="#planetary">Planetary video</a>.</td>
                         </tr>
                     </tbody>
                 </table>
                 <p>
-                    <strong>Opening one file opens its folder.</strong> Every supported image beside it
+                    Opening one file opens its folder. Every supported image beside it
                     appears in the file list on the left, so stepping through a night's subs is
                     <kbd>&uarr;</kbd> and <kbd>&darr;</kbd> rather than a sequence of file dialogs. Drag
                     the divider to resize the list, or press <kbd>L</kbd> to hide it.
@@ -166,9 +167,8 @@
                     <p>
                         Double-clicking a second file from the same folder hands it to the window
                         <em>already showing that folder</em> instead of starting another copy of the
-                        app. Each folder gets one window. To deliberately open a second window on the
-                        same folder &mdash; two views of one directory, side by side &mdash; start it
-                        with <code>--new-window</code>.
+                        app. Each folder gets one window. To open a second window on the same folder,
+                        start it with <code>--new-window</code>.
                     </p>
                 </div>
 
@@ -177,28 +177,27 @@
                     Drag the image to pan and use the wheel to zoom. <kbd>F</kbd> fits the image to the
                     window, <kbd>R</kbd> goes to 1:1, and <kbd>Z</kbd> opens a menu with the fixed
                     ratios (<kbd>Ctrl+2</kbd> to <kbd>Ctrl+9</kbd> are 1:2 through
-                    1:9). The zoom button in the toolbar is also the read-out: it shows the current
-                    scale, so there is no second copy of that number anywhere else.
+                    1:9). The zoom button in the toolbar shows the current scale.
                 </p>
                 <p>
                     Three panels toggle independently: <kbd>L</kbd> the file list, <kbd>I</kbd> the info
                     panel on the right (metadata, per-channel statistics and the cursor read-out), and
-                    <kbd>V</kbd> the histogram, with <kbd>Shift+V</kbd> switching it to a log scale. The
-                    white balance has its own panel under <kbd>W</kbd> rather than standing open in the
-                    info panel. <kbd>F11</kbd> is fullscreen, and <kbd>Esc</kbd> closes whatever is open
-                    &mdash; a panel, then a selection &mdash; before it quits.
+                    <kbd>H</kbd> the histogram, with <kbd>Shift+H</kbd> switching it to a log scale. The
+                    white balance has its own panel under <kbd>W</kbd>. <kbd>F11</kbd> is fullscreen.
+                    <kbd>Esc</kbd> closes an open menu or popover first, then an enlarged object picture,
+                    then clears the selection, and only then quits.
                 </p>
 
                 <h2 id="stretch">Making the image visible</h2>
                 <p>
                     A linear astronomical frame is nearly black: almost all of its data sits in the
                     bottom fraction of a percent of the range. A <em>screen stretch</em> is a display
-                    curve that makes that visible without altering a single stored pixel. Everything in
-                    this section changes only what you are looking at.
+                    curve that makes that data visible without changing the stored pixels. Everything in
+                    this section changes only what is displayed.
                 </p>
                 <p>
-                    <kbd>T</kbd> turns the stretch on and off &mdash; the fastest way to see what the
-                    data actually looks like. The mode button beside it picks how the three channels are
+                    <kbd>T</kbd> turns the stretch on and off, which is the quickest way to see the
+                    unstretched data. The mode button beside it picks how the three channels are
                     treated:
                 </p>
                 <table>
@@ -206,53 +205,54 @@
                         <tr><th>Mode</th><th>What it does</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Auto</td><td>Linked when a colour calibration is applied, unlinked otherwise. The default, and usually right.</td></tr>
+                        <tr><td>Auto</td><td>Linked when a colour calibration is applied or the channels already agree, unlinked otherwise (and for narrowband colour). The default, and usually right.</td></tr>
                         <tr><td>Linked</td><td>One curve for all three channels, so an existing colour balance survives as colour.</td></tr>
                         <tr><td>Unlinked</td><td>Each channel gets its own curve, which neutralises the background. Good for judging structure, and it will discard a real colour cast along with an unwanted one.</td></tr>
                         <tr><td>Luma</td><td>Stretches luminance and blends the colour back, so saturation does not climb with the curve.</td></tr>
+                        <tr><td>Planetary</td><td>For a planet or the Moon: keeps the dark sky dark instead of lifting it, so the disc is not blown out. A frame whose <code>OBJECT</code> names a planet or the Moon opens in this mode.</td></tr>
                     </tbody>
                 </table>
                 <p>
                     <kbd>+</kbd> and <kbd>&minus;</kbd> step through stretch strength presets.
-                    <kbd>B</kbd> cycles a curves boost and <kbd>Shift+B</kbd> changes which
-                    curve it applies; <kbd>H</kbd> cycles HDR highlight compression, which pulls back a
-                    blown core without flattening the rest. <kbd>C</kbd> cycles the channel view between
-                    RGB and a single channel, and <kbd>D</kbd> cycles the demosaic algorithm for a Bayer
-                    sensor &mdash; the small swatch on that button is the sensor's actual CFA phase, read
-                    from the file. The demosaic starts on <strong>Auto</strong>, which reads the answer
-                    off the file rather than asking you for it: a still colour frame is demosaiced with
+                    The <strong>Tone</strong> button holds the curves boost and the HDR highlight
+                    compression, which pulls back a blown core without flattening the rest; scroll over
+                    the button to step the compression. <kbd>B</kbd> cycles the boost and
+                    <kbd>Shift+B</kbd> changes which curve it applies. <kbd>C</kbd> cycles the channel view between
+                    RGB and a single channel (colour frames only), and <kbd>D</kbd> cycles the demosaic algorithm for a Bayer
+                    sensor. The small swatch on that button is the sensor's CFA phase, read from the
+                    file. The demosaic starts on <strong>Auto</strong>, which picks the algorithm from
+                    the file: a still colour frame is demosaiced with
                     VNG, which leaves no dark ring around a bright star, and a SER video with MHC, so a
                     frame you are scrubbing looks like the master the planetary stacker will build from
                     it. A mono or already-colour frame is left alone.
                 </p>
                 <p>
-                    <kbd>Shift+C</kbd> crops a stacked master to the area every frame actually covered,
+                    <kbd>Shift+C</kbd> crops a stacked master to the area every frame covered,
                     taking off the ragged, under-exposed border a stack leaves where only some of the
                     subs reached. Where the stack wrote a coverage map the answer is exact; otherwise the
-                    edge is measured. The crop is not just a view: the plate solution, a saved file, the
-                    A/B comparison and the AI enhancement all see the cropped frame, which matters most
-                    for the enhancement, since the border is exact zero and a neural network reads that
-                    as structure. Press it again to see the whole frame.
+                    edge is measured. The plate solution, saved files, the A/B comparison and the AI
+                    enhancement all use the cropped frame. This matters most for the enhancement: the
+                    border is exactly zero, and a neural network treats that as structure. Press it again
+                    to see the whole frame.
                 </p>
 
                 <h2 id="colour">Colour</h2>
                 <p>
                     <kbd>W</kbd> opens the white balance panel, which holds everything colour in one
                     place: three sliders, an <strong>Auto</strong> grey-world guess, a <strong>Reset</strong>,
-                    and the colour calibration itself. The sliders show the <em>effective</em> balance
-                    &mdash; the calibration composed with your own fine-tune, which is exactly what the
-                    screen is being multiplied by &mdash; so the panel never reads neutral over an image
-                    that visibly is not.
+                    and the colour calibration itself. The sliders show the <em>effective</em> balance,
+                    meaning the calibration combined with your own adjustment, so they always match what
+                    is on screen.
                 </p>
                 <p>
                     With a calibration in force the panel also prints what it measured: the method it
                     used, how many samples or stars survived, and the white reference where there is one.
-                    That line is the point &mdash; a triple like "R = 0.46" could have come from a
-                    careful fit or a crude guess, and only the provenance tells you which.
+                    A value like "R = 0.46" could come from a careful fit or a rough guess, and this line
+                    tells you which.
                 </p>
                 <p>
-                    <kbd>N</kbd> neutralises the background, and it is a <em>separate</em> step on
-                    purpose: a white balance is one multiplier per channel, which can only cancel a
+                    <kbd>N</kbd> neutralises the background. It is a separate step because a white
+                    balance is one multiplier per channel, which can only cancel a
                     per-channel offset at a single brightness, so a sky with a gradient or a pedestal
                     keeps its cast until this is applied on top. Turning the calibration off restores the
                     balance you had before it ran.
@@ -270,9 +270,8 @@
                 <h2 id="measuring">Stars, solving and the sky</h2>
                 <p>
                     <kbd>S</kbd> detects stars and draws them, and the status bar reports the count with
-                    the average HFD and FWHM &mdash; the two numbers that say whether a sub is worth
-                    keeping. It measures the frame as loaded, so it is a judgement about that exposure
-                    rather than about the stack.
+                    the average HFD and FWHM, the two numbers that tell you whether a sub is worth
+                    keeping. It measures the frame as loaded.
                 </p>
                 <p>
                     <kbd>P</kbd> plate-solves the frame. A solve is what turns pixel coordinates into sky
@@ -282,32 +281,32 @@
                 </p>
                 <p>
                     <kbd>O</kbd> then annotates the frame: a WCS coordinate grid and the deep-sky objects
-                    the frame contains, together in one press, and gone again on the next.
+                    the frame contains. Press it again to hide them.
                     <kbd>Shift+O</kbd> steps the two levels one at a time if you want the grid without the
                     objects, and <kbd>G</kbd> toggles the grid on its own.
                 </p>
                 <p>
-                    <kbd>Y</kbd> puts the <strong>sky itself behind your photograph</strong> &mdash; the
-                    same star field, constellation figures and catalogue the browser sky atlas shows,
-                    aligned to your plate solve and sitting exactly where your frame sits on the sky. It
+                    <kbd>Y</kbd> puts the sky behind your photograph: the same star field, constellation
+                    figures and catalogue the browser sky atlas shows, aligned to your plate solve. It
                     needs a solved frame, and the toolbar button says so when there is not one yet. With
                     the sky up, a small floating panel appears over the image with the map's ten layers on
                     it; drag it to any edge, or double-click its grip to roll it up.
                 </p>
                 <p>
-                    <strong>Click any catalogued object to see what it is.</strong> A panel appears with
-                    its name, type and magnitude, and &mdash; where the frame records when and where it
-                    was taken &mdash; its altitude and rise, transit and set times <em>at the moment of
-                    the exposure</em>, not at the moment you happen to be looking. The ring drawn round
-                    the selection traces the object's own shape where the catalogue knows one, so an
-                    inclined galaxy rings as the tilted disc it is rather than as a circle.
+                    Click any catalogued object to see what it is. A panel shows its name, type and
+                    magnitude. If the frame records when and where it was taken, the panel also shows the
+                    object's altitude and its rise, transit and set times at the time of the exposure.
+                    Where available, the panel has a picture of the object (click to enlarge) and links
+                    to its Wikipedia article and the sky atlas.
+                    The ring drawn round the selection follows the object's shape where the catalogue has
+                    one, so an inclined galaxy gets an ellipse instead of a circle.
                     <kbd>Esc</kbd> clears the selection.
                 </p>
                 <p>
                     With the pointer over the image, the info panel's cursor block shows the pixel
-                    position, its per-channel value in both normalised and 16-bit form, and &mdash; once
-                    solved &mdash; the RA and Dec under the cursor. <strong>Right-click copies any of
-                    it</strong>: the menu carries the coordinates in both sexagesimal and decimal
+                    position, its per-channel value in both normalised and 16-bit form, and, once the
+                    frame is solved, the RA and Dec under the cursor. Right-click to copy any of it: the
+                    menu carries the coordinates in both sexagesimal and decimal
                     degrees, the pixel value, the position, and a link that opens the in-browser sky
                     atlas looking at exactly that part of the sky, at the frame's own field of view and
                     at the moment the frame was taken. Every entry shows its value in the menu, so you
@@ -320,65 +319,70 @@
                     <kbd>A</kbd> puts a divider down the middle of the image. The right half follows your
                     controls; the left half is pinned to how things looked when you pressed it. Drag the
                     divider to sweep the comparison across the frame. Each half is labelled with what
-                    makes it different from the other, so you are never guessing which side is which.
-                    <kbd>Shift+A</kbd> re-pins the left half to the current settings &mdash;
-                    the "pin what I have, then fiddle" gesture. After an AI enhancement the split
-                    switches to comparing <em>pixels</em>, before against after, because that is what you
-                    want to see at that moment.
+                    makes it different from the other.
+                    <kbd>Shift+A</kbd> re-pins the left half to the current settings. After an AI
+                    enhancement, the split compares the image before and after the enhancement.
                 </p>
                 <h3>Blink &mdash; two frames, one processing state</h3>
                 <p>
-                    Each frame you click or step to gets <strong>its own auto-stretch</strong>, as it does
-                    in N.I.N.A. and PixInsight: a click in the list means "show me this frame". Comparing
-                    subs is different, and fails for a reason that is not obvious: with a fresh stretch per
-                    frame, a genuine brightness difference is hidden by the display adapting to it. So
-                    <kbd>Ctrl+H</kbd> <strong>holds the display mapping</strong> across frames of the
-                    same shape &mdash; every frame is shown with the held frame's stretch, and what you
-                    see differing is the data. A blink is the viewer clicking for you and carries no more
-                    than a click does; hold first if you want the comparison. The colour calibration is
-                    shared across the run either way, so a click never costs a second SPCC fit.
+                    Each frame you click or step to gets its own auto-stretch, as it does
+                    in N.I.N.A. and PixInsight. That makes subs hard to compare: with a fresh stretch per
+                    frame, the display adapts to a real brightness difference and hides it.
+                    <kbd>Ctrl+H</kbd> holds the display mapping across frames of the same shape, so
+                    every frame is shown with the held frame's stretch and any difference you see is in
+                    the data. Blinking uses the same per-frame stretch as clicking, so turn on the hold
+                    first if you want to compare. The colour calibration is shared across the run either
+                    way, so clicking to another frame never runs a second SPCC fit.
                 </p>
                 <p>
                     The status bar says <code>Held to &lt;file&gt;</code> whenever that is happening, the
                     held frame carries an <code>[H]</code> in the file list, and
-                    <kbd>Ctrl+H</kbd> releases or re-takes the hold. A hold is honest to the pixels: a
-                    sub whose sky is darker than the held frame's renders darker all over, target
-                    included, so release it when you are looking at one frame rather than comparing two.
+                    <kbd>Ctrl+H</kbd> releases or re-takes the hold. While held, a sub whose sky is darker
+                    than the held frame's is shown darker all over, target included, so release the hold
+                    when you are looking at a single frame.
                     <kbd>Ctrl+Space</kbd> jumps back to the held frame.
                     <kbd>Space</kbd> blinks forward through the file list and
                     <kbd>Shift+Space</kbd> backward; pressing the same direction again pauses,
-                    pressing the other one reverses. A frame the held mapping cannot describe &mdash; a
-                    different size, sensor or filter &mdash; stops the blink and says which file it was.
+                    pressing the other one reverses. A frame the held mapping cannot apply to (a
+                    different size, sensor or filter) stops the blink, and the status bar names the file.
                 </p>
 
                 <h2 id="planetary">Planetary video</h2>
                 <p>
-                    Opening a <code>.ser</code> switches the viewer into playback. <kbd>Space</kbd> plays
-                    and pauses, <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> step one frame,
-                    <kbd>Home</kbd> and <kbd>End</kbd> jump to the first and last, and the scrub bar
+                    Opening a <code>.ser</code> switches the viewer into playback. <kbd>Space</kbd> or
+                    <kbd>Tab</kbd> plays and pauses, <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> step one
+                    frame, <kbd>Home</kbd> and <kbd>End</kbd> jump to the first and last,
+                    <kbd>&uarr;</kbd> and <kbd>&darr;</kbd> change the playback speed, and the scrub bar
                     under the image seeks.
                 </p>
                 <p>
-                    <kbd>K</kbd> switches between the raw frame and a <strong>rolling lucky-imaging
-                    stack</strong> that follows the playhead: it grades frames by sharpness, keeps the
-                    best, aligns and integrates them, and updates as you scrub. Six wavelet-sharpen
-                    sliders in the info panel work over the result. All of it runs off the render thread,
-                    so the sliders stay responsive however long a stack takes.
+                    The view has three modes: <strong>Frames</strong>, <strong>Live</strong> and
+                    <strong>Auto</strong>. <kbd>K</kbd> switches between the frames and the Live view, a
+                    rolling lucky-imaging stack that follows the playhead: it grades frames by sharpness,
+                    keeps the best, aligns and integrates them, and updates as you scrub.
+                    <kbd>Shift+K</kbd> builds the Auto view: the whole capture is stacked once and the
+                    result is saved beside the SER. Press it again while it runs to cancel.
+                </p>
+                <p>
+                    Six wavelet-sharpen sliders in the info panel work over the result, with
+                    <strong>Derive</strong> to set them from the planet and telescope and
+                    <strong>Reset</strong> to clear them. Stacking runs off the render thread, so the
+                    sliders stay responsive however long a stack takes.
                 </p>
 
                 <h2 id="enhance">AI enhancement</h2>
                 <p>
-                    <kbd>E</kbd> runs an AI enhancement &mdash; star removal, deconvolution, denoising or
+                    <kbd>E</kbd> runs an AI enhancement: star removal, deconvolution, denoising or
                     gradient correction, depending on what is available. Right-clicking the button cycles
-                    which backend is used. Pressing <kbd>E</kbd> again turns the result off, and while
+                    the backend between Auto, RC-Astro and TianWen's own. Pressing <kbd>E</kbd> again turns the result off, and while
                     one is running it cancels.
                 </p>
                 <p>
                     The viewer ships with its own denoising model for one-shot-colour images, so that one
                     works out of the box. The rest are <em>other people's</em> models, and the viewer
-                    reads them wherever their own installers put them &mdash; nothing is copied and no
-                    files are duplicated. If you have RC-Astro's tools or SETI Astro's SAS Pro installed,
-                    they are found automatically; if not, those roles are simply unavailable. The
+                    reads them from wherever their own installers put them, without copying anything.
+                    If you have RC-Astro's tools installed, they are found automatically; if not, those
+                    enhancements are unavailable. The
                     <kbd>?</kbd> panel lists which backend resolved, which products are licensed, and
                     which model files are missing.
                 </p>
@@ -387,46 +391,42 @@
                 <p>
                     The save button offers three things. <strong>Image as displayed (16-bit)</strong>
                     and <strong>Image as displayed (8-bit)</strong> write the picture with the stretch,
-                    white balance, curves, HDR and channel view baked in, and nothing else. The choice
-                    between them is the depth of a PNG, and it binds on a <code>.png</code> name alone:
-                    a JPEG is 8-bit because baseline JPEG is, and a TIFF here is always 32-bit float,
-                    so typing either of those extensions still writes what the name asked for.
+                    white balance, curves, HDR and channel view baked in, and nothing else. The 8/16-bit
+                    choice only applies to PNG: a JPEG is always 8-bit and a TIFF is always 32-bit
+                    float, whichever entry you picked.
                     <strong>Image with overlays</strong> writes the same picture with the coordinate
                     grid, star markers and object labels drawn on it, as a PNG or a JPEG.
                 </p>
                 <p>
-                    <strong>Neither is a screenshot.</strong> The pixels are re-rendered at the image's
-                    own resolution, so a 9576&times;6388 master saves at 9576&times;6388 from a
-                    1280-pixel-wide window &mdash; and the annotation is drawn at that size too, rather
-                    than scaled up from the screen. Whichever overlays are switched on when you save are
-                    the ones you get; turn a grid off first and it will not be in the file.
+                    None of these is a screenshot. The image is re-rendered at its own resolution, so a
+                    9576&times;6388 master saves at 9576&times;6388 from a 1280-pixel-wide window, and
+                    the annotations are drawn at that size too. The file includes whichever overlays are
+                    switched on when you save.
                 </p>
                 <p>
-                    The annotated file is suggested as <code>&lt;name&gt;-annotated.png</code>, because
-                    the two saves are of one picture and land in the same folder. Right-clicking the save
-                    button skips the menu and writes the clean version straight away.
+                    The annotated file is suggested as <code>&lt;name&gt;-annotated.png</code>, so it can
+                    sit in the same folder as the clean save. Right-clicking the save button skips the
+                    menu and writes the clean version straight away.
                 </p>
                 <div class="callout">
                     <span class="label">Worth knowing</span>
                     <p>
                         The annotated save is 8 bits per channel. The clean one can be 16-bit PNG or float
-                        TIFF, so that is the one to keep if you are going on to edit it &mdash; the
-                        annotated file is for showing someone what is in the frame.
+                        TIFF, so keep that one if you are going to edit it further. The annotated file
+                        is for showing someone what is in the frame.
                     </p>
                     <p>
-                        16-bit is the default for the clean save, and the reason inverts the intuition.
-                        On a single sub the noise straddles several 8-bit steps and dithers them, so
-                        nothing bands. On a deep stack or a denoised master the noise floor drops below
-                        one step, and a smooth gradient turns into visible contours. 8 bits is safest on
-                        the worst data and most dangerous on the best, which is why it is a choice per
-                        save rather than a setting.
+                        16-bit is the default for the clean save. On a single sub the noise spans several
+                        8-bit steps and dithers them, so nothing bands. On a deep stack or a denoised
+                        master the noise drops below one step, and a smooth gradient turns into visible
+                        contours. So 8-bit is fine for a noisy sub but can band on a clean master.
                     </p>
                 </div>
 
                 <h2 id="keys">Every keyboard shortcut</h2>
                 <p>
-                    The same list is in the app, behind the <kbd>?</kbd> button at the top right, along
-                    with the version you are running.
+                    The same list is in the app, behind the <kbd>?</kbd> button at the top right
+                    (<kbd>F1</kbd>), along with the version you are running.
                 </p>
 
                 <h3>View</h3>
@@ -443,9 +443,10 @@
                         <tr><td><kbd>Z</kbd></td><td>Zoom menu (fit / 1:1 / 1:N)</td></tr>
                         <tr><td><kbd>L</kbd></td><td>File list</td></tr>
                         <tr><td><kbd>I</kbd></td><td>Info panel</td></tr>
-                        <tr><td><kbd>V</kbd> / <kbd>Shift+V</kbd></td><td>Histogram / log scale</td></tr>
+                        <tr><td><kbd>H</kbd> / <kbd>Shift+H</kbd></td><td>Histogram / log scale</td></tr>
+                        <tr><td><kbd>F1</kbd></td><td>Shortcuts, version and diagnostics panel</td></tr>
                         <tr><td><kbd>F11</kbd></td><td>Fullscreen</td></tr>
-                        <tr><td><kbd>Esc</kbd></td><td>Clear the selection, else quit</td></tr>
+                        <tr><td><kbd>Esc</kbd></td><td>Close a menu, else clear the selection, else quit</td></tr>
                     </tbody>
                 </table>
 
@@ -454,8 +455,7 @@
                     <tbody>
                         <tr><td><kbd>T</kbd></td><td>Screen stretch on / off</td></tr>
                         <tr><td><kbd>+</kbd> / <kbd>&minus;</kbd></td><td>Stretch strength preset</td></tr>
-                        <tr><td><kbd>B</kbd> / <kbd>Shift+B</kbd></td><td>Curves boost / curve mode</td></tr>
-                        <tr><td><kbd>H</kbd> / <kbd>Shift+H</kbd></td><td>HDR highlight compression, forward / back</td></tr>
+                        <tr><td><kbd>B</kbd> / <kbd>Shift+B</kbd></td><td>Curves boost / curve mode (HDR compression is on the Tone button)</td></tr>
                         <tr><td><kbd>C</kbd></td><td>Channel view (RGB or one channel)</td></tr>
                         <tr><td><kbd>D</kbd></td><td>Demosaic algorithm</td></tr>
                         <tr><td><kbd>W</kbd></td><td>White balance panel: sliders, colour calibration, reset</td></tr>
@@ -483,41 +483,44 @@
                     <tbody>
                         <tr><td><kbd>A</kbd> / <kbd>Shift+A</kbd></td><td>Before / after split; re-pin</td></tr>
                         <tr><td><kbd>Ctrl+H</kbd></td><td>Hold / release the display across frames</td></tr>
-                        <tr><td><kbd>Space</kbd></td><td>Blink the file list forward (play / pause for a sequence)</td></tr>
+                        <tr><td><kbd>Space</kbd></td><td>Blink the file list forward (hold to pause)</td></tr>
                         <tr><td><kbd>Shift+Space</kbd></td><td>Blink backward</td></tr>
                         <tr><td><kbd>Ctrl+Space</kbd></td><td>Back to the frame the display is held to</td></tr>
-                        <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Previous / next file</td></tr>
+                        <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Previous / next file (stills)</td></tr>
                     </tbody>
                 </table>
 
                 <h3>Sequences (SER)</h3>
                 <table>
                     <tbody>
-                        <tr><td><kbd>Space</kbd></td><td>Play / pause</td></tr>
+                        <tr><td><kbd>Space</kbd> / <kbd>Tab</kbd></td><td>Play / pause</td></tr>
                         <tr><td><kbd>&larr;</kbd> / <kbd>&rarr;</kbd></td><td>Step one frame</td></tr>
                         <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>First / last frame</td></tr>
-                        <tr><td><kbd>K</kbd></td><td>Raw / stacked view</td></tr>
+                        <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Faster / slower playback</td></tr>
+                        <tr><td><kbd>K</kbd></td><td>Frames / Live stack</td></tr>
+                        <tr><td><kbd>Shift+K</kbd></td><td>Auto view: stack the whole capture and save it (again to cancel)</td></tr>
                     </tbody>
                 </table>
 
                 <h2 id="trouble">When something looks wrong</h2>
                 <p>
-                    The <kbd>?</kbd> button at the top right is the first place to look. It reports the
+                    The <kbd>?</kbd> button at the top right (<kbd>F1</kbd>) is the first place to look. It reports the
                     exact version and build, where the app is installed, and the state of every AI
-                    backend &mdash; which one resolved, what is licensed, and which model files are
-                    missing. "The viewer from the Store" is not enough detail for a bug report; that
-                    panel is.
+                    backend: which one resolved, what is licensed, and which model files are missing.
+                    Include what it shows when you report a bug.
                 </p>
                 <p>
                     Logs are written per run to
-                    <code>%LOCALAPPDATA%\TianWen\Logs\&lt;date&gt;\FitsViewer_*.log</code> on Windows, and
-                    to <code>~/.local/share/TianWen/Logs/</code> on Linux.
+                    <code>%LOCALAPPDATA%\TianWen\Logs\&lt;yyyyMMdd&gt;\FitsViewer_*.log</code> on Windows,
+                    <code>~/Library/Application Support/TianWen/Logs/</code> on macOS, and
+                    <code>~/.local/share/TianWen/Logs/</code> on Linux (or under
+                    <code>$XDG_DATA_HOME/TianWen</code> if that is set).
                 </p>
                 <div class="callout limit">
                     <span class="label">Known limitations in this version</span>
                     <p>
-                        Photometric colour calibration is broadband only. On a mosaic frame the
-                        single-channel views show the raw mosaic rather than the separated colour planes.
+                        Photometric colour calibration is broadband only. The single-channel view is not
+                        available on a raw mosaic (Bayer) frame.
                     </p>
                 </div>
                 <p>

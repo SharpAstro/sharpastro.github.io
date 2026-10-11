@@ -84,10 +84,10 @@
                 <h1>Software that runs the whole night.</h1>
                 <p class="lede">
                     SharpAstro is a set of open-source .NET libraries and applications for
-                    astrophotography. It covers the whole night: <strong>controlling the mount and
-                    camera</strong>, running an <strong>unattended imaging session</strong>, and
-                    <strong>stacking what comes back</strong>. It's built for real rigs, including the
-                    multi-telescope setups most software can't drive.
+                    astrophotography: <strong>controlling the mount and camera</strong>, running an
+                    <strong>unattended imaging session</strong>, and <strong>stacking what comes
+                    back</strong>. It can drive several telescopes on one mount from a single
+                    session.
                 </p>
 
                 <div class="cta-row">
@@ -96,10 +96,9 @@
                 </div>
 
                 <p class="hero-meta">
-                    <span>20 libraries &amp; applications</span>
+                    <span>23 libraries &amp; applications</span>
                     <span>Native AOT binaries</span>
                     <span>AGPL-3.0 &amp; MIT</span>
-                    <span>No vendor lock-in</span>
                 </p>
             </div>
         </section>
@@ -144,7 +143,7 @@
                     <article class="usecase">
                         <div class="usecase-body">
                             <p class="eyebrow">Planning</p>
-                            <h3>Decide what is actually worth shooting</h3>
+                            <h3>Decide what is worth shooting</h3>
                             <p>
                                 The scheduler ranks tonight's targets by altitude, the moon, and
                                 whatever blocks your own horizon, then gives each one the part of the
@@ -182,7 +181,7 @@
                         </div>
                         <figure>
                             <div class="shot"><img src="assets/img/sky-atlas.webp" width="1800" height="1160" alt="The Sky Map tab showing the Milky Way through Sagittarius and Scorpius with constellation figures, boundaries, the ecliptic, the zenith marker and the mount's own reticle." loading="lazy" /></div>
-                            <figcaption>Sky Map: the full Tycho-2 catalogue on the GPU, with the pinned target circled and the mount's reticle showing where it's actually pointing.</figcaption>
+                            <figcaption>Sky Map: the full Tycho-2 catalogue on the GPU, with the pinned target circled and the mount's reticle showing where it's pointing.</figcaption>
                         </figure>
                     </article>
 
@@ -215,9 +214,11 @@
                             <h3>Talk to the gear you already own</h3>
                             <p>
                                 ASCOM on Windows, Alpaca over the network on any platform, the native
-                                ZWO and QHYCCD SDKs, serial mounts such as Meade LX200, SkyWatcher,
-                                OnStep and iOptron, and Canon bodies over PTP without installing any
-                                Canon software.
+                                ZWO, QHYCCD, Player One and ToupTek SDKs (including the Altair, Omegon,
+                                OGMA and MallinCam cameras built on ToupTek's), serial mounts such as
+                                Meade LX200, SkyWatcher, OnStep and the iOptron SkyGuider Pro, the
+                                Gemini FlatPanel Lite and Focuser Pro, and Canon bodies over PTP without
+                                installing any Canon software.
                             </p>
                             <p class="detail">
                                 Each device is identified by a URI, so switching drivers means editing a
@@ -242,14 +243,14 @@
                             </p>
                             <p>
                                 From a desktop you can connect to another machine and follow its run in
-                                the same tabs you'd use locally. Switching to another rig changes what
-                                you're looking at, not what your own machine is controlling.
+                                the same tabs you'd use locally. Switching to another rig only changes the
+                                view; your own machine keeps controlling its own hardware.
                             </p>
                         </div>
                         <figure>
                             <pre class="term" aria-label="Example terminal session querying a running node over its REST API"><code><span class="c"># what is the rig doing right now?</span>
-<span class="p">$</span> curl -s localhost:1888/api/v1/session/state | jq '.data.phase, .data.activeObservation.target.name'
-<span class="o">"Observing"</span>
+<span class="p">$</span> curl -s localhost:1888/api/v1/session/state | jq '.response.phase, .response.activeTargetName'
+<span class="o">7</span>   <span class="c"># Observing</span>
 <span class="o">"Helix Nebula"</span>
 
 <span class="c"># the same hardware, spoken to as ASCOM Alpaca by anything else on the network</span>
@@ -271,10 +272,11 @@
                                 grid and catalogue labels on a plate-solved frame.
                             </p>
                             <p>
-                                SER files open in playback mode. A RAW/STACK toggle switches to a
-                                rolling lucky-imaging stack that follows the playhead, with six wavelet
-                                sharpening sliders on top. Stacking runs in the background, so the
-                                sliders stay responsive however long a stack takes.
+                                SER files open in playback mode. Switch to the Live view for a rolling
+                                lucky-imaging stack that follows the playhead, or to the Auto view to
+                                stack the whole capture once and save the result beside the file. Six
+                                wavelet sharpening sliders work on either. Stacking runs in the
+                                background, so the sliders stay responsive however long a stack takes.
                             </p>
                             <div class="cta-row">
                                 <a class="btn btn-ghost" href="https://apps.microsoft.com/detail/9pmdzp16tgbg">Get it from the Microsoft Store &rarr;</a>
@@ -311,9 +313,8 @@
                         to WebAssembly and run straight from a static site.
                     </p>
                     <p>
-                        The desktop app's tabs don't care what they draw on, so the code that renders
-                        through Vulkan on your desktop renders through WebGL in a browser tab. Same
-                        scheduler, same catalogue, same projection maths. It isn't a port.
+                        The same code renders through Vulkan on the desktop and through WebGL in the
+                        browser, with the same scheduler, catalogue and projection maths.
                     </p>
                     <div class="cta-row">
                         <a class="btn btn-primary" href="/tianwen/">Open the live app &rarr;</a>
@@ -331,10 +332,10 @@
             <div class="wrap">
                 <div class="section-head">
                     <p class="eyebrow">The ecosystem</p>
-                    <h2>Twenty pieces, each usable on its own</h2>
+                    <h2>Twenty-three pieces, each usable on its own</h2>
                     <p>
                         The astrophotography stack is built on general-purpose libraries that were
-                        written for it but are useful on their own. Everything is pure managed code and
+                        written for it. Everything is pure managed code and
                         AOT-friendly, except where it wraps a vendor's native SDK.
                     </p>
                 </div>
@@ -366,6 +367,14 @@
                                 <span class="cat-name">QHYCCD.SDK</span>
                                 <span class="cat-desc">A .NET wrapper for the QHYCCD native SDK.</span>
                             </a></li>
+                            <li><a href="https://github.com/SharpAstro/PlayerOne.SDK">
+                                <span class="cat-name">PlayerOne.SDK</span>
+                                <span class="cat-desc">Player One cameras and filter wheels, with bundled natives for Windows, Linux and macOS.</span>
+                            </a></li>
+                            <li><a href="https://github.com/SharpAstro/ToupTek.SDK">
+                                <span class="cat-name">ToupTek.SDK</span>
+                                <span class="cat-desc">ToupTek cameras, and the brands that rebadge the same SDK (Altair, Omegon, OGMA, MallinCam and others), through one binding.</span>
+                            </a></li>
                             <li><a href="https://github.com/SharpAstro/Canon.EDSDK">
                                 <span class="cat-name">Canon.EDSDK</span>
                                 <span class="cat-desc">Canon EDSDK bindings, fully source-generated and NativeAOT-compatible.</span>
@@ -382,7 +391,7 @@
                         <ul class="cat-list">
                             <li><a href="https://github.com/SharpAstro/FITS.Lib">
                                 <span class="cat-name">FITS.Lib</span>
-                                <span class="cat-desc">A FITS reader and writer that's much faster at writing the large multi-dimensional integer arrays astronomical imaging actually produces.</span>
+                                <span class="cat-desc">A FITS reader and writer that's much faster at writing the large integer arrays astronomical imaging produces, and reads tile-compressed <code>.fz</code> and multi-extension files.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/SER.Lib">
                                 <span class="cat-name">SER.Lib</span>
@@ -390,7 +399,7 @@
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/Codecs">
                                 <span class="cat-name">Codecs</span>
-                                <span class="cat-desc">Pure managed image codecs (TIFF, PNG, JPEG, JPEG&nbsp;XR, OpenEXR, ICC) behind a single entry point that detects the format from the file itself.</span>
+                                <span class="cat-desc">Pure managed image codecs (TIFF, PNG, JPEG, JPEG&nbsp;2000, JPEG&nbsp;XL, JPEG&nbsp;XR, OpenEXR and JBIG2, plus EXIF and ICC) behind a single entry point that detects the format from the file itself.</span>
                             </a></li>
                         </ul>
                     </div>
@@ -425,6 +434,10 @@
                             <li><a href="https://github.com/SharpAstro/Lzip.Lib">
                                 <span class="cat-name">Lzip.Lib</span>
                                 <span class="cat-desc">lzip (LZMA1) compression and decompression, including parallel decode of multi-member files, byte-compatible with the reference tool.</span>
+                            </a></li>
+                            <li><a href="https://github.com/SharpAstro/AppShell">
+                                <span class="cat-name">AppShell</span>
+                                <span class="cat-desc">Single-instance desktop apps: a later launch hands its file to the window already open, per app or per folder, and that window comes to the front.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/LAN.Lib">
                                 <span class="cat-name">LAN.Lib</span>
