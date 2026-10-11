@@ -118,14 +118,18 @@
                     <a class="btn btn-ghost" href="https://apps.microsoft.com/detail/9pmdzp16tgbg">Get it from the Microsoft Store &rarr;</a>
                 </div>
                 <p class="detail">
-                    Windows&nbsp;10 version&nbsp;2004 or newer, x64 and ARM64. Linux and macOS builds
-                    are on <a href="https://github.com/SharpAstro/tianwen/releases">GitHub Releases</a>.
-                    On macOS, open the <code>.dmg</code>. On Linux, unpack the self-contained archive
-                    and run <code>tianwen-fits</code>; there is no runtime to install. An unpackaged
-                    Windows or Linux install can register the FITS file types with
-                    <code>tianwen-fits --register</code>, and SER with
-                    <code>tianwen-fits --register SER</code>. On macOS, set the default app in
-                    Finder with Get Info &rarr; Open With.
+                    Windows&nbsp;10 version&nbsp;2004 or newer, x64 and ARM64. Builds for Linux, macOS
+                    and Windows without the Store are on
+                    <a href="https://github.com/SharpAstro/tianwen/releases">GitHub Releases</a>.
+                    On macOS, open the <code>.dmg</code>. On Linux or Windows, unpack the
+                    self-contained archive and run <code>tianwen-fits</code>; there is no runtime to
+                    install.
+                </p>
+                <p class="detail">
+                    The archive builds do not register file types on their own. Run
+                    <code>tianwen-fits --register</code> once for the FITS types and
+                    <code>tianwen-fits --register SER</code> for SER. The Store build does not need
+                    this. On macOS, set the default app in Finder with Get Info &rarr; Open With.
                 </p>
 
                 <h2 id="opening">Opening images</h2>
