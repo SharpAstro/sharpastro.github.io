@@ -26,6 +26,7 @@
     --text: #dbe2ee;
     --dim: #8895ac;
     --teal: #66ddcc;
+    --mark: #e04a00;
     --teal-ink: #041a17;
     --amber: #ffb35c;
     --amber-ink: #21140a;
@@ -56,6 +57,7 @@
         --text: #0f141c;
         --dim: #59647a;
         --teal: #0b7d6d;
+        --mark: #b83c00;
         --teal-ink: #ffffff;
         --amber: #8f5300;
         --amber-ink: #ffffff;
@@ -77,6 +79,7 @@
     --text: #0f141c;
     --dim: #59647a;
     --teal: #0b7d6d;
+    --mark: #b83c00;
     --teal-ink: #ffffff;
     --amber: #8f5300;
     --amber-ink: #ffffff;
@@ -95,6 +98,7 @@
     --text: #dbe2ee;
     --dim: #8895ac;
     --teal: #66ddcc;
+    --mark: #e04a00;
     --teal-ink: #041a17;
     --amber: #ffb35c;
     --amber-ink: #21140a;
@@ -221,13 +225,14 @@ code, .mono { font-family: "Plex Mono", ui-monospace, SFMono-Regular, Menlo, mon
     letter-spacing: -0.01em;
 }
 
-.topbar .brand .sharp { color: var(--teal); }
+.topbar .brand .sharp { color: var(--mark); }
 
 /* The mark carries its own copper, because a total eclipse is the same colour on either ground.
-   The sharp is the half that has to follow the theme, so CSS owns that one: the dark theme's mint
-   is unreadable on a white header, and the light theme's darker teal disappears on the dark one. */
+   The sharp is the half that has to follow the theme, so CSS owns that one. Its colour is tianwen's
+   night-mode text (NightPalette.BodyText, no blue at all) on the dark theme, and the night palette's
+   dim text on the light one, where the brighter orange is too pale on a white header. */
 .topbar .brand .mark { flex: none; }
-.topbar .brand .mark-sharp { fill: var(--teal); }
+.topbar .brand .mark-sharp { fill: var(--mark); }
 
 .topbar nav {
     margin-inline-start: auto;
