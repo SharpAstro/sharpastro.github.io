@@ -192,7 +192,10 @@
                             <p>
                                 The built-in guider calibrates itself, guides on the star you pick, and
                                 dithers between sub-exposures. If you already trust PHD2, use that
-                                instead.
+                                instead. And if several imaging programs share one PHD2, one per camera
+                                on a dual rig, <a href="https://github.com/SharpAstro/openphd2-multiscope">openphd2-multiscope</a>
+                                holds each dither until all of them have asked for it, so no program's
+                                dither ruins another's exposure.
                             </p>
                             <p class="detail">
                                 Calibration runs half an hour <em>east</em> of the meridian on purpose.
@@ -459,7 +462,7 @@
                         <ul class="cat-list">
                             <li><a href="https://github.com/SharpAstro/openphd2-multiscope">
                                 <span class="cat-name">openphd2-multiscope</span>
-                                <span class="cat-desc">A multiplexing proxy for PHD2's JSON-RPC API that keeps several telescopes dithering in step.</span>
+                                <span class="cat-desc">Lets N.I.N.A., SGP or APT, one per camera, share one PHD2, and dithers only once all of them asked. One download for Windows, Linux or macOS; no TianWen needed.</span>
                             </a></li>
                             <li><a href="https://github.com/SharpAstro/usbreset">
                                 <span class="cat-name">usbreset</span>
