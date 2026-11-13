@@ -6,10 +6,12 @@
    - light = a photographic survey plate. Plates are negatives, so the light theme is ink on a
              cool near-white, NOT cream -- the warm-paper-and-serif look is somebody else's site.
 
-   The teal accent is not invented: #66ddcc is the pinned-target colour the TianWen GUI draws
-   with, and the same value the in-browser app already uses for its chrome. Site and product
-   are one system. Amber is a K-class star's colour and is spent in exactly one place, the
-   live-demo call to action.
+   The accent is not invented: it is the orange of the logo's sharp (--mark), in the shades the
+   TianWen GUI and the in-browser app use as their accent (#ff5e00 on dark, #b83c00 on light, where
+   the logo's own #e04a00 is about 4:1 on white). Site and product are one system. It was a teal
+   until the product's accent moved to the logo's orange. The accent is the colour of the primary
+   action, so the live-demo call to action is drawn in it; the amber is a warning's colour (a
+   guide's "this is a real limit" callout) and sits towards yellow so it is not read as the accent.
 
    Everything is styled through the tokens; the media query and the [data-theme] overrides
    redefine ONLY the tokens, so the OS preference and the explicit toggle can never disagree
@@ -25,11 +27,10 @@
     --line-strong: #2b3550;
     --text: #dbe2ee;
     --dim: #8895ac;
-    --teal: #66ddcc;
+    --accent: #ff5e00;
     --mark: #e04a00;
-    --teal-ink: #041a17;
-    --amber: #ffb35c;
-    --amber-ink: #21140a;
+    --accent-ink: #140c00;
+    --amber: #ccac18;
     --scrim-top: rgba(7, 10, 18, 0.35);
     --scrim-bottom: rgba(7, 10, 18, 0.97);
     --shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 44px rgba(0, 0, 0, 0.5);
@@ -56,11 +57,10 @@
         --line-strong: #c3ccd9;
         --text: #0f141c;
         --dim: #59647a;
-        --teal: #0b7d6d;
+        --accent: #b83c00;
         --mark: #b83c00;
-        --teal-ink: #ffffff;
-        --amber: #8f5300;
-        --amber-ink: #ffffff;
+        --accent-ink: #ffffff;
+        --amber: #7a5c00;
         --scrim-top: rgba(245, 246, 248, 0.10);
         --scrim-bottom: rgba(245, 246, 248, 0.97);
         --shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 34px rgba(15, 20, 28, 0.14);
@@ -78,11 +78,10 @@
     --line-strong: #c3ccd9;
     --text: #0f141c;
     --dim: #59647a;
-    --teal: #0b7d6d;
+    --accent: #b83c00;
     --mark: #b83c00;
-    --teal-ink: #ffffff;
-    --amber: #8f5300;
-    --amber-ink: #ffffff;
+    --accent-ink: #ffffff;
+    --amber: #7a5c00;
     --scrim-top: rgba(245, 246, 248, 0.10);
     --scrim-bottom: rgba(245, 246, 248, 0.97);
     --shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 34px rgba(15, 20, 28, 0.14);
@@ -97,11 +96,10 @@
     --line-strong: #2b3550;
     --text: #dbe2ee;
     --dim: #8895ac;
-    --teal: #66ddcc;
+    --accent: #ff5e00;
     --mark: #e04a00;
-    --teal-ink: #041a17;
-    --amber: #ffb35c;
-    --amber-ink: #21140a;
+    --accent-ink: #140c00;
+    --amber: #ccac18;
     --scrim-top: rgba(7, 10, 18, 0.35);
     --scrim-bottom: rgba(7, 10, 18, 0.97);
     --shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 44px rgba(0, 0, 0, 0.5);
@@ -176,7 +174,7 @@ img { display: block; max-width: 100%; height: auto; }
 code, .mono { font-family: "Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
 
 :where(a, button, summary):focus-visible {
-    outline: 2px solid var(--teal);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 2px;
 }
@@ -300,14 +298,14 @@ code, .mono { font-family: "Plex Mono", ui-monospace, SFMono-Regular, Menlo, mon
     :root:not([data-theme="dark"]) .hero::before { display: none; }
     :root:not([data-theme="dark"]) .hero::after {
         background:
-            radial-gradient(70% 100% at 15% 0%, color-mix(in srgb, var(--teal) 9%, transparent), transparent 60%),
+            radial-gradient(70% 100% at 15% 0%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 60%),
             linear-gradient(180deg, transparent 60%, var(--void) 100%);
     }
 }
 :root[data-theme="light"] .hero::before { display: none; }
 :root[data-theme="light"] .hero::after {
     background:
-        radial-gradient(70% 100% at 15% 0%, color-mix(in srgb, var(--teal) 9%, transparent), transparent 60%),
+        radial-gradient(70% 100% at 15% 0%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 60%),
         linear-gradient(180deg, transparent 60%, var(--void) 100%);
 }
 :root[data-theme="dark"] .hero::before { display: block; opacity: 0.55; }
@@ -349,12 +347,12 @@ code, .mono { font-family: "Plex Mono", ui-monospace, SFMono-Regular, Menlo, mon
 
 .btn:hover { transform: translateY(-1px); }
 
-/* The single loudest element on the page, and the only amber. */
-.btn-primary { background: var(--amber); color: var(--amber-ink); }
-.btn-primary:hover { background: color-mix(in srgb, var(--amber) 88%, white); }
+/* The single loudest element on the page: the accent as a fill. */
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: color-mix(in srgb, var(--accent) 88%, var(--accent-ink)); }
 
 .btn-ghost { border-color: var(--line-strong); color: var(--text); }
-.btn-ghost:hover { background: var(--panel-2); border-color: var(--teal); }
+.btn-ghost:hover { background: var(--panel-2); border-color: var(--accent); }
 
 .hero-meta {
     display: flex;
@@ -434,7 +432,7 @@ figure { margin: 0; }
    The prompt carries the only accent; output is plain body colour. */
 .term code { font: inherit; color: inherit; }
 .term .c { color: var(--dim); }
-.term .p { color: var(--teal); user-select: none; }
+.term .p { color: var(--accent); user-select: none; }
 .term .o { color: var(--text); }
 
 .shot {
@@ -457,7 +455,7 @@ figcaption {
 .demo {
     border-block: 1px solid var(--line);
     background:
-        radial-gradient(80% 130% at 50% 0%, color-mix(in srgb, var(--teal) 8%, transparent), transparent 62%),
+        radial-gradient(80% 130% at 50% 0%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 62%),
         var(--panel);
 }
 
@@ -515,7 +513,7 @@ figcaption {
     font-family: "Plex Mono", monospace;
     font-weight: 500;
     font-size: var(--t-0);
-    color: var(--teal);
+    color: var(--accent);
 }
 
 .cat-list a:hover .cat-name { text-decoration: underline; text-underline-offset: 3px; }
